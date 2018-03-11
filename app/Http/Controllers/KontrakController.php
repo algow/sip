@@ -25,7 +25,7 @@ class KontrakController extends Controller
                 return view('datatable._aksi', [
                     'edit_url' => route('kontrak.edit', $kontrak->id),
                     'kontak' => route('kontrak.whatsapp', $kontrak->id),
-                    'tanggal' => $kontrak['diambil_pada']
+                    'tanggal' => $kontrak->diambil_pada
                 ]);
             })
               ->editColumn('nilai_kontrak', function ($kontrak) {

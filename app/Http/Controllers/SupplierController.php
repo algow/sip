@@ -26,7 +26,7 @@ class SupplierController extends Controller
                     return view('datatable._aksi', [
                         'edit_url' => route('supplier.edit', $supplier->id),
                         'kontak' => route('supplier.whatsapp', $supplier->id),
-                        'tanggal' => $supplier['diambil_pada']
+                        'tanggal' => $supplier->diambil_pada
                     ]);
                 })
                 ->editColumn('tanggal_spm', function ($supplier) {
