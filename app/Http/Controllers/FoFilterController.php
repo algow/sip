@@ -95,10 +95,10 @@ class FoFilterController extends Controller
             $query = Kontrak::where('kode_satker', $query_satker);
         }
         if (isset($query_tanggal) && empty($query_satker)) {
-            $query = Kontrak::where('tanggal_terima_fo', $query_tanggal);
+            $query = Kontrak::where('tanggal_terima', $query_tanggal);
         }
         if (isset($query_satker) && isset($query_tanggal)) {
-            $query = Kontrak::where('kode_satker', $query_satker)->where('tanggal_terima_fo', $query_tanggal);
+            $query = Kontrak::where('kode_satker', $query_satker)->where('tanggal_terima', $query_tanggal);
         }
         $kontrak = $query;
         return Datatables::of($kontrak)
@@ -115,8 +115,8 @@ class FoFilterController extends Controller
                 return '<a class="btn-xs btn-success" href="'.route('get.kontrak.tandai', $kontrak->id).'" title="tandai sebagai sudah diambil"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>';
             }
           })
-          ->editColumn('tanggal_terima_fo', function ($kontrak) {
-                return date('d F Y', strtotime($kontrak->tanggal_terima_fo));
+          ->editColumn('tanggal_terima', function ($kontrak) {
+                return date('d F Y', strtotime($kontrak->tanggal_terima));
           })
         ->make(true);
     }

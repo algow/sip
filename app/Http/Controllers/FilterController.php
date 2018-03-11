@@ -25,14 +25,18 @@ class FilterController extends Controller
         $spm = $query_supplier['kode'];
         $diterima = strtotime($query_supplier['tanggal_terima']);
         $tanggal = date('d F Y', $diterima);
-        $alasan = $query_supplier['keterangan'];
+        $alasan = strtoupper($query_supplier['keterangan']);
         
-        $pesan = 'Salam%20perbendaharaan%2E%0ASaya%20petugas%20KPPN%20Jakarta%20III%20'
-                . 'ingin%20menginformasikan%20bahwa%20SPM%20supplier%20dengan%20nomor%20' . $spm
+        $pesan = 'Salam%20perbendaharaan%2E%0A%0ASaya%20petugas%20KPPN%20Jakarta%20III%20'
+                . 'menginformasikan%20bahwa%20SPM%20supplier%20dengan%20nomor%20' . $spm
                 . '%20yang%20disetorkan%20ke%20loket%20kami%20pada%20tanggal%20' . $tanggal
                 . '%20telah%20ditolak%20pengajuannya%20dengan%20alasan%20%22' . $alasan . '%22'
-                . '%2E%20Mohon%20untuk%20segera%20mengambil%20kembali%20berkas%20SPM%20tersebut'
-                . '%20di%20loket%20pelayanan%20KPPN%20Jakarta%20III%2E%0A%0APesan%20antikorupsi';
+                . '%2E%20%0AMohon%20untuk%20segera%20mengambil%20kembali%20berkas%20SPM%20tersebut'
+                . '%20di%20loket%20pelayanan%20KPPN%20Jakarta%20III%2E%0A%0ABantu%20kami%20'
+                . 'mewujudkan%20Wilayah%20Bebas%20dari%20Korupsi%20%28WBK%29%20dan%20Wilayah'
+                . '%20Birokrasi%20Bersih%20dan%20Melayani%20(WBBM)%20dengan%20cara%20tidak'
+                . '%20memberikan%20gratifikasi%20dalam%20bentuk%20apapun%20kepada%20para'
+                . '%20pegawai%20KPPN%20Jakarta%20III%2E';
         
         return redirect()->away('https://web.whatsapp.com/send?phone=' . $kontak . '&text=' . $pesan);
     }
@@ -43,16 +47,20 @@ class FilterController extends Controller
         $query_satker = Satker::find($relation);
         $kontak = $query_satker['whatsapp'];
         $spm = $query_kontrak['kode'];
-        $diterima = strtotime($query_kontrak['tanggal_terima_fo']);
+        $diterima = strtotime($query_kontrak['tanggal_terima']);
         $tanggal = date('d F Y', $diterima);
-        $alasan = $query_kontrak['keterangan'];
+        $alasan = strtoupper($query_kontrak['keterangan']);
         
-        $pesan = 'Salam%20perbendaharaan%2E%0ASaya%20petugas%20KPPN%20Jakarta%20III%20ingin%20menginformasikan%20bahwa%20'
+        $pesan = 'Salam%20perbendaharaan%2E%0A%0ASaya%20petugas%20KPPN%20Jakarta%20III%20menginformasikan%20bahwa%20'
                 . 'SPM%20kontrak%20dengan%20nomor%20' . $spm
                 . '%20yang%20disetorkan%20ke%20loket%20kami%20pada%20tanggal%20' . $tanggal
                 . '%20telah%20ditolak%20pengajuannya%20dengan%20alasan%20%22' . $alasan . '%22'
-                . '%2E%20Mohon%20untuk%20segera%20mengambil%20kembali%20berkas%20SPM%20tersebut%20di%20loket%20pelayanan%20'
-                . 'KPPN%20Jakarta%20III%2E%0A%0APesan%20antikorupsi';
+                . '%2E%20%0AMohon%20untuk%20segera%20mengambil%20kembali%20berkas%20SPM%20'
+                . 'tersebut%20di%20loket%20pelayanan%20KPPN%20Jakarta%20III%2E%0A%0ABantu'
+                . '%20kami%20mewujudkan%20Wilayah%20Bebas%20dari%20Korupsi%20%28WBK%29%20'
+                . 'dan%20Wilayah%20Birokrasi%20Bersih%20dan%20Melayani%20(WBBM)%20dengan%20'
+                . 'cara%20tidak%20memberikan%20gratifikasi%20dalam%20bentuk%20apapun%20kepada'
+                . '%20para%20pegawai%20KPPN%20Jakarta%20III%2E';
         
         return redirect()->away('https://web.whatsapp.com/send?phone=' . $kontak . '&text=' . $pesan);
     }
@@ -90,7 +98,8 @@ class FilterController extends Controller
                     return view('datatable._aksi', [
                         'model' => $supplier,
                         'edit_url' => route('supplier.edit', $supplier->id),
-                        'kontak' => route('supplier.whatsapp', $supplier->id)
+                        'kontak' => route('supplier.whatsapp', $supplier->id),
+                        'tanggal' => $supplier['diambil_pada']
                     ]);
                 })
                 ->editColumn('tanggal_spm', function ($supplier) {
@@ -128,10 +137,10 @@ class FilterController extends Controller
                 $query = Kontrak::where('kode_satker', $query_satker)->get();
             }
             if (isset($query_tanggal) && empty($query_satker)) {
-                $query = Kontrak::where('tanggal_terima_fo', $query_tanggal)->get();
+                $query = Kontrak::where('tanggal_terima', $query_tanggal)->get();
             }
             if (isset($query_satker) && isset($query_tanggal)) {
-                $query = Kontrak::where('kode_satker', $query_satker)->where('tanggal_terima_fo', $query_tanggal)->get();
+                $query = Kontrak::where('kode_satker', $query_satker)->where('tanggal_terima', $query_tanggal)->get();
             }
             if (empty($query_tanggal) && empty($query_satker)) {
                 return redirect()->route("kontrak.index");
@@ -145,6 +154,7 @@ class FilterController extends Controller
                         'model' => $kontrak,
                         'edit_url' => route('kontrak.edit', $kontrak->id),
                         'kontak' => route('kontrak.whatsapp', $kontrak->id),
+                        'tanggal' => $kontrak['diambil_pada']
                   ]);
                 })
                   ->editColumn('nilai_kontrak', function ($kontrak) {
@@ -158,14 +168,14 @@ class FilterController extends Controller
                         return date('d F Y', strtotime($kontrak->diambil_pada));
                     }
                 })
-                  ->editColumn('tanggal_terima_fo', function ($kontrak) {
-                        return date('d F Y', strtotime($kontrak->tanggal_terima_fo));
+                  ->editColumn('tanggal_terima', function ($kontrak) {
+                        return date('d F Y', strtotime($kontrak->tanggal_terima));
                 })->make(true);
             }
             $html = $htmlBuilder
                 ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
                 ->addColumn(['data' => 'nama_supplier', 'name'=>'nama_supplier', 'title'=>'Nama Supplier'])
-                ->addColumn(['data' => 'tanggal_terima_fo', 'name'=>'tanggal_terima_fo', 'title'=>'Tgl Terima FO'])
+                ->addColumn(['data' => 'tanggal_terima', 'name'=>'tanggal_terima', 'title'=>'Tgl Terima FO'])
                 ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'No Kontrak'])
                 ->addColumn(['data' => 'nilai_kontrak', 'name'=>'nilai_kontrak', 'title'=>'Nilai Kontrak'])
                 ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])

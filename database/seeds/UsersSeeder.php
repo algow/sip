@@ -28,8 +28,7 @@ class UsersSeeder extends Seeder
         // Membuat sample admin
         $admin = new User();
         $admin->name = 'Admin';
-        $admin->email = 'algow64@gmail.com';
-        $admin->username = 'admin';
+        $admin->email = 'admin';
         $admin->password = bcrypt('admin');
         $admin->save();
         $admin->attachRole($adminRole);
@@ -37,8 +36,7 @@ class UsersSeeder extends Seeder
         // Membuat sample member
         $frontoffice = new User();
         $frontoffice->name = "Front Office";
-        $frontoffice->email = 'sampel@gmail.com';
-        $admin->username = 'fo';
+        $frontoffice->email = 'fo';
         $frontoffice->password = bcrypt('fo');
         $frontoffice->save();
         $frontoffice->attachRole($foRole);

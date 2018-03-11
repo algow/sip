@@ -24,7 +24,6 @@ class SupplierController extends Controller
             return Datatables::of($query_supplier)
                 ->addColumn('action', function($supplier){
                     return view('datatable._aksi', [
-                        'model' => $supplier,
                         'edit_url' => route('supplier.edit', $supplier->id),
                         'kontak' => route('supplier.whatsapp', $supplier->id),
                         'tanggal' => $supplier['diambil_pada']

@@ -16,7 +16,7 @@ class CreateSatkersTable extends Migration
         Schema::create('satkers', function (Blueprint $table) {
             $table->char('kode', 6)->primary();
             $table->string('nama_satker');
-            $table->string('whatsapp');
+            $table->string('whatsapp')->nullable();
             $table->timestamps();
             });
     }

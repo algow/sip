@@ -15,7 +15,7 @@ class ExcelController extends Controller
         $satker = $request->input('satker');
         $tanggal = $request->input('tanggal');
         $tanggal_terima = date('d F Y', strtotime($tanggal));
-        
+                
         $supplier = '';
         
         if (isset($satker) && isset($tanggal)) {
@@ -51,14 +51,33 @@ class ExcelController extends Controller
         $satker = $request->input('satker');
         $tanggal = $request->input('tanggal');
         $tanggal_terima = date('d F Y', strtotime($tanggal));
-        
+        /* $array_bulan = array(
+               '01' => 'JANUARI',
+               '02' => 'FEBRUARI',
+               '03' => 'MARET',
+               '04' => 'APRIL',
+               '05' => 'MEI',
+               '06' => 'JUNI',
+               '07' => 'JULI',
+               '08' => 'AGUSTUS',
+               '09' => 'SEPTEMBER',
+               '10' => 'OKTOBER',
+               '11' => 'NOVEMBER',
+               '12' => 'DESEMBER',
+       );
+        $i = date('d-m', strtotime($tanggal));
+        $ke = substr($i, -s);
+        $bulan = $array_bulan[$ke];
+        $show_date = 
+        */
+                
         $kontrak = '';
         
         if (isset($satker) && isset($tanggal)) {
-            $kontrak = Kontrak::where('kode_satker', $satker)->where('tanggal_terima_fo', $tanggal)->get();
+            $kontrak = Kontrak::where('kode_satker', $satker)->where('tanggal_terima', $tanggal)->get();
         }
         if (isset($tanggal) && empty($satker)) {
-            $kontrak = Kontrak::where('tanggal_terima_fo', $tanggal)->get();
+            $kontrak = Kontrak::where('tanggal_terima', $tanggal)->get();
         }
         if (isset($satker) && empty($tanggal)) {
             $kontrak = Kontrak::where('kode_satker', $satker)->get();

@@ -14,8 +14,8 @@
 
 <div class="form-group">
   <div class="col-md-6">
-    {!! Form::label('tanggal_terima_fo', 'Tanggal Diterima FO', ['class'=>'control-label']) !!}
-    {!! Form::date('tanggal_terima_fo', null, ['class'=>'form-control']) !!}
+    {!! Form::label('tanggal_terima', 'Tanggal Diterima FO', ['class'=>'control-label']) !!}
+    {!! Form::date('tanggal_terima', null, ['class'=>'form-control']) !!}
   </div>
 </div>
 

@@ -26,6 +26,7 @@
     <title>Sistem Informasi Penolakan</title>
 
     <!-- Styles -->
+    {!! Charts::styles() !!}
     <link href="{{ asset('css/font-awesome.min.css') }}" rel='stylesheet' type='text/css'>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -128,6 +129,7 @@
     </div>
 
     <!-- Scripts -->
+    {!! Charts::scripts() !!}
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/js/dashboard.js') }}"></script>
     <script src="{{ asset('admin/js/users/edit.js') }}"></script>

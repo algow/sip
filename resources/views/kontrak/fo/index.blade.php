@@ -43,7 +43,7 @@ $(function() {
         columns: [
             {data: 'kode_satker', name: 'kode_satker'},
             {data: 'nama_supplier', name: 'nama_supplier'},
-            {data: 'tanggal_terima_fo', name: 'nama_supplier'},
+            {data: 'tanggal_terima', name: 'tanggal_terima'},
             {data: 'kode', name: 'kode'},
             {data: 'nilai_kontrak', name: 'nilai_kontrak', render: $.fn.dataTable.render.number('.', null, null, 'Rp ')},
             {data: 'keterangan', name: 'keterangan'},

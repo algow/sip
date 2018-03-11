@@ -23,7 +23,6 @@ class KontrakController extends Controller
             return Datatables::of($query_kontrak)
               ->addColumn('action', function($kontrak){
                 return view('datatable._aksi', [
-                    'model' => $kontrak,
                     'edit_url' => route('kontrak.edit', $kontrak->id),
                     'kontak' => route('kontrak.whatsapp', $kontrak->id),
                     'tanggal' => $kontrak['diambil_pada']
@@ -35,19 +34,19 @@ class KontrakController extends Controller
               ->editColumn('diambil_pada', function ($kontrak) {
                   if (is_null($kontrak['diambil_pada'])) {
                     return '';
-              }
-              else {
-                  return date('d F Y', strtotime($kontrak->diambil_pada) );
-              }
+                  }
+                  else {
+                    return date('d F Y', strtotime($kontrak->diambil_pada) );
+                  }
             })
-              ->editColumn('tanggal_terima_fo', function ($kontrak) {
-                return date('d F Y', strtotime($kontrak->tanggal_terima_fo));
+              ->editColumn('tanggal_terima', function ($kontrak) {
+                return date('d F Y', strtotime($kontrak->tanggal_terima));
             })->make(true);
         }
         $html = $htmlBuilder
             ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
             ->addColumn(['data' => 'nama_supplier', 'name'=>'nama_supplier', 'title'=>'Nama Supplier'])
-            ->addColumn(['data' => 'tanggal_terima_fo', 'name'=>'tanggal_terima_fo', 'title'=>'Tgl Terima FO'])
+            ->addColumn(['data' => 'tanggal_terima', 'name'=>'tanggal_terima', 'title'=>'Tgl Terima FO'])
             ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'No Kontrak'])
             ->addColumn(['data' => 'nilai_kontrak', 'name'=>'nilai_kontrak', 'title'=>'Nilai Kontrak'])
             ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])
@@ -80,7 +79,7 @@ class KontrakController extends Controller
             'nama_supplier' => 'required',
             'nilai_kontrak' => 'required|numeric',
             'keterangan' => 'required',
-            'tanggal_terima_fo' => 'required|date'
+            'tanggal_terima' => 'required|date'
             ]);
         $kontrak = Kontrak::create($request->all());
         Session::flash("flash_notification", [

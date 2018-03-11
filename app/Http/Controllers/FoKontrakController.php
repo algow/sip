@@ -30,8 +30,8 @@ class FoKontrakController extends Controller
                 return '<a class="btn-xs btn-success" href="'.route('get.kontrak.tandai', $kontrak->id).'" title="tandai sebagai sudah diambil"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>';
             }
           })
-          ->editColumn('tanggal_terima_fo', function ($kontrak) {
-                return date('d F Y', strtotime($kontrak->tanggal_terima_fo));
+          ->editColumn('tanggal_terima', function ($kontrak) {
+                return date('d F Y', strtotime($kontrak->tanggal_terima));
           })
         ->make(true);
     }

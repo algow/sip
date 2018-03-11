@@ -15,10 +15,10 @@ class CreateKontraksTable extends Migration
     {
         Schema::create('kontraks', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('kode', 32);
+            $table->char('kode', 40);
             $table->string('nama_supplier');
             $table->date('tanggal_spm')->nullable();
-            $table->date('tanggal_terima_fo');
+            $table->date('tanggal_terima');
             $table->unsignedBigInteger('nilai_kontrak');
             $table->string('keterangan', 300);
             $table->boolean('tanda_terima')->default(0);

@@ -23,7 +23,6 @@ class SatkersController extends Controller
             return Datatables::of($query_satker)
                 ->addColumn('action', function($satker){
                     return view('datatable._aksi', [
-                        'model' => $satker,
                         'edit_url' => route('satker.edit', $satker->kode),
                         'kontak' => route('supplier.whatsapp', $satker->kode),
                         'tanggal' => "I think therefore i am"
