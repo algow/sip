@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use App\Kontrak;
 use Validator;
 use Session;
+use App\Http\Controllers\DatatablesController as IndexTable;
 
 class KontrakController extends Controller
 {
@@ -16,43 +17,9 @@ class KontrakController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Builder $htmlBuilder)
+    public function index()
     {
-        if ($request->ajax()) {
-            $query_kontrak = Kontrak::all();
-            return Datatables::of($query_kontrak)
-              ->addColumn('action', function($kontrak){
-                return view('datatable._aksi', [
-                    'edit_url' => route('kontrak.edit', $kontrak->id),
-                    'kontak' => route('kontrak.whatsapp', $kontrak->id),
-                    'tanggal' => $kontrak->diambil_pada
-                ]);
-            })
-              ->editColumn('nilai_kontrak', function ($kontrak) {
-                  return number_format($kontrak->nilai_kontrak, 0, '.', '.');
-            })
-              ->editColumn('diambil_pada', function ($kontrak) {
-                  if (is_null($kontrak['diambil_pada'])) {
-                    return '';
-                  }
-                  else {
-                    return date('d F Y', strtotime($kontrak->diambil_pada) );
-                  }
-            })
-              ->editColumn('tanggal_terima', function ($kontrak) {
-                return date('d F Y', strtotime($kontrak->tanggal_terima));
-            })->make(true);
-        }
-        $html = $htmlBuilder
-            ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
-            ->addColumn(['data' => 'nama_supplier', 'name'=>'nama_supplier', 'title'=>'Nama Supplier'])
-            ->addColumn(['data' => 'tanggal_terima', 'name'=>'tanggal_terima', 'title'=>'Tgl Terima FO'])
-            ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'No Kontrak'])
-            ->addColumn(['data' => 'nilai_kontrak', 'name'=>'nilai_kontrak', 'title'=>'Nilai Kontrak'])
-            ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])
-            ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
-            ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false, 'searchable'=>false]);
-        return view('kontrak.admin.index')->with(compact('html'));
+        return redirect()->away('http://localhost/sipen/public/admin/telusuri?jenis=kontrak&satker=&tanggal=');
     }
 
     /**

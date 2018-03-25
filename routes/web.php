@@ -47,7 +47,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function
     
     Route::get('filter', ['as' => 'filter', 'uses' => 'FilterController@filter']);
         // Filter index form
-    Route::get('telusuri', ['as' => 'get.filter', 'uses' => 'FilterController@index']);
+    Route::get('telusuri', ['as' => 'telusuri', 'uses' => 'FilterController@index']);
         // Filter logic
     
     Route::get('eksport', ['as' => 'supplier.export', 'uses' => 'ExcelController@exportSupplier']);

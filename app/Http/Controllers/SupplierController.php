@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
-use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\DataTables;
 use App\Supplier;
 use Validator;
-use App\Satker;
+use Yajra\DataTables\Html\Builder;
+use App\Http\Controllers\DatatablesController as IndexTable;
 
 class SupplierController extends Controller
 {
@@ -17,44 +17,9 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Builder $htmlBuilder)
+    public function index()
     {
-        if ($request->ajax()) {
-            $query_supplier = Supplier::all();
-            return Datatables::of($query_supplier)
-                ->addColumn('action', function($supplier){
-                    return view('datatable._aksi', [
-                        'edit_url' => route('supplier.edit', $supplier->id),
-                        'kontak' => route('supplier.whatsapp', $supplier->id),
-                        'tanggal' => $supplier->diambil_pada
-                    ]);
-                })
-                ->editColumn('tanggal_spm', function ($supplier) {
-                  return date('d F Y', strtotime($supplier->tanggal_spm) );
-                })
-                ->editColumn('nilai_spm', function ($supplier) {
-                  return number_format($supplier->nilai_spm, 0, '.', '.');
-                })
-                ->editColumn('diambil_pada', function ($supplier) {
-                  if (is_null($supplier['diambil_pada'])) {
-                    return '';
-                  }
-                  else {
-                    return date('d F Y', strtotime($supplier->diambil_pada) );
-                  }
-                })
-            ->make(true);            
-        }
-        $html = $htmlBuilder
-            ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
-            ->addColumn(['data' => 'nama_supplier', 'name'=>'nama_supplier', 'title'=>'Nama Supplier'])
-            ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'Nomor SPM'])
-            ->addColumn(['data' => 'tanggal_spm', 'name'=>'tanggal_spm', 'title'=>'Tanggal SPM'])
-            ->addColumn(['data' => 'nilai_spm', 'name'=>'nilai_spm', 'title'=>'Nilai SPM'])
-            ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])
-            ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
-            ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false, 'searchable'=>false]);
-        return view('supplier.admin.index')->with(compact('html'));
+        return redirect()->away('http://localhost/sipen/public/admin/telusuri?jenis=supplier&satker=&tanggal=');
     }
 
     /**

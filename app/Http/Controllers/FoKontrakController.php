@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Kontrak;
-use FoFilterController;
 use Session;
 
 class FoKontrakController extends Controller
 {
     public function getIndex() {
-        return view('kontrak.fo.index');
+        $route = "get.kontrak";
+        return view('kontrak.fo.index')
+                ->with('route', $route)
+                ->with('jenis', null)
+                ->with('satker', null)
+                ->with('tanggal', null)
+                ->with('tanggal_terima', null);
     }
     public function getQuery() {
                 

@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-use App\Supplier;
-use App\Kontrak;
 use Validator;
+use App\Http\Controllers\QueryController as QueryController;
 
 class FoFilterController extends Controller
 {
+    
     public function form()
     {
-        return view('filter.indexfo');
+        $route = 'fo.telusuri';
+        return view('filter.index')->with('route', $route);
     }
     public function telusuri(Request $request)
     {
@@ -25,9 +26,12 @@ class FoFilterController extends Controller
         $query_tanggal = $request->input('tanggal');
         $tanggal_terima = date('d F Y', strtotime($query_tanggal));
         
-        if ($query_jenis === "kontrak") {
+        if ($query_jenis === "kontrak") {          
             if (isset($query_tanggal) || isset($query_satker)) {
-                return view('filter.kontrakfo')->with('jenis', $query_jenis)
+                $route = "kontrak.ajax";
+                return view('kontrak.fo.index')
+                        ->with('route', $route)
+                        ->with('jenis', $query_jenis)
                         ->with('satker', $query_satker)
                         ->with('tanggal', $query_tanggal)
                         ->with('tanggal_terima', $tanggal_terima);
@@ -38,7 +42,10 @@ class FoFilterController extends Controller
         }
         if ($query_jenis === "supplier") {
             if (isset($query_tanggal) || isset($query_satker)) {
-                return view('filter.supplierfo')->with('jenis', $query_jenis)
+                $route = "supplier.ajax";
+                return view('supplier.fo.index')
+                        ->with('route', $route)
+                        ->with('jenis', $query_jenis)
                         ->with('satker', $query_satker)
                         ->with('tanggal', $query_tanggal)
                         ->with('tanggal_terima', $tanggal_terima);
@@ -50,21 +57,8 @@ class FoFilterController extends Controller
     }
     public function supplierAjax(Request $request)
     {
-        $query = "";
-
-        $query_satker = $request->input('satker');
-        $query_tanggal = $request->input('tanggal');
-        
-        if (isset($query_satker) && empty($query_tanggal)) {
-            $query = Supplier::where('kode_satker', $query_satker);
-        }
-        if (isset($query_tanggal) && empty($query_satker)) {
-            $query = Supplier::where('tanggal_terima', $query_tanggal);
-        }
-        if (isset($query_satker) && isset($query_tanggal)) {
-            $query = Supplier::where('kode_satker', $query_satker)->where('tanggal_terima', $query_tanggal);
-        }
-        $supplier = $query;
+        $query = new QueryController($request);
+        $supplier = $query->getQuery();
         return Datatables::of($supplier)
           ->editColumn('diambil_pada', function ($supplier) {
             if (is_null($supplier['diambil_pada'])) {
@@ -86,21 +80,8 @@ class FoFilterController extends Controller
     }
     public function kontrakAjax(Request $request)
     {
-        $query = "";
-
-        $query_satker = $request->input('satker');
-        $query_tanggal = $request->input('tanggal');
-        
-        if (isset($query_satker) && empty($query_tanggal)) {
-            $query = Kontrak::where('kode_satker', $query_satker);
-        }
-        if (isset($query_tanggal) && empty($query_satker)) {
-            $query = Kontrak::where('tanggal_terima', $query_tanggal);
-        }
-        if (isset($query_satker) && isset($query_tanggal)) {
-            $query = Kontrak::where('kode_satker', $query_satker)->where('tanggal_terima', $query_tanggal);
-        }
-        $kontrak = $query;
+        $query = new QueryController($request);
+        $kontrak = $query->getQuery();
         return Datatables::of($kontrak)
           ->editColumn('diambil_pada', function ($kontrak) {
             if (is_null($kontrak['diambil_pada'])) {

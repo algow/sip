@@ -10,7 +10,13 @@ use Session;
 class FoSupplierController extends Controller
 {
     public function getIndex() {
-        return view('supplier.fo.index');
+        $route = "get.supplier";
+        return view('supplier.fo.index')
+                ->with('route', $route)
+                ->with('jenis', null)
+                ->with('satker', null)
+                ->with('tanggal', null)
+                ->with('tanggal_terima', null);
     }
     public function getQuery() {
         $supplier = Supplier::all();

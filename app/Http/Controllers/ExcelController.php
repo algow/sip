@@ -7,40 +7,39 @@ use Excel;
 use App\Supplier;
 use App\Kontrak;
 use App\Satker;
+use App\Http\Controllers\QueryController as QueryController;
 
 class ExcelController extends Controller
 {
+    public function query($request)
+    {
+        $query = new QueryController($request);
+        return $query->getQuery();
+    }
+    public function tanggal($request)
+    {
+        $query = new QueryController($request);
+        return $query->getTanggal();
+    }
     public function exportSupplier(Request $request)
     {
-        $satker = $request->input('satker');
-        $tanggal = $request->input('tanggal');
-        $tanggal_terima = date('d F Y', strtotime($tanggal));
-                
-        $supplier = '';
+        $supplier = $this->query($request);
+        $tanggal_terima = $this->tanggal($request);
         
-        if (isset($satker) && isset($tanggal)) {
-            $supplier = Supplier::where('kode_satker', $satker)->where('tanggal_terima', $tanggal)->get();
-        }
-        if (isset($tanggal) && empty($satker)) {
-            $supplier = Supplier::where('tanggal_terima', $tanggal)->get();
-        }
-        if (isset($satker) && empty($tanggal)) {
-            $supplier = Supplier::where('kode_satker', $satker)->get();
-        }
         Excel::load('misc\Supplier.xlsx', function($excel) use ($supplier, $tanggal_terima) {
             $excel->sheet('Sheet1', function($sheet) use ($supplier, $tanggal_terima) {
                 $sheet->setCellValue('C2', $tanggal_terima);
                 $i = 1;
                 $rows = 3;
-                foreach ($supplier as $supplier) {
+                foreach ($supplier as $suppliers) {
                     $sheet->prependRow(++$rows, [
                         $i++,
-                        $supplier->kode_satker,
-                        $supplier->nama_supplier,
-                        $supplier->kode,
-                        date('d/m/Y', strtotime($supplier->tanggal_spm)),
-                        number_format($supplier->nilai_spm, 0, '.', '.'),
-                        $supplier->keterangan
+                        $suppliers->kode_satker,
+                        $suppliers->nama_supplier,
+                        $suppliers->kode,
+                        date('d/m/Y', strtotime($suppliers->tanggal_spm)),
+                        number_format($suppliers->nilai_spm, 0, '.', '.'),
+                        $suppliers->keterangan
                     ]);
                 } 
             });
@@ -48,40 +47,8 @@ class ExcelController extends Controller
     }
     public function exportKontrak(Request $request)
     {
-        $satker = $request->input('satker');
-        $tanggal = $request->input('tanggal');
-        $tanggal_terima = date('d F Y', strtotime($tanggal));
-        /* $array_bulan = array(
-               '01' => 'JANUARI',
-               '02' => 'FEBRUARI',
-               '03' => 'MARET',
-               '04' => 'APRIL',
-               '05' => 'MEI',
-               '06' => 'JUNI',
-               '07' => 'JULI',
-               '08' => 'AGUSTUS',
-               '09' => 'SEPTEMBER',
-               '10' => 'OKTOBER',
-               '11' => 'NOVEMBER',
-               '12' => 'DESEMBER',
-       );
-        $i = date('d-m', strtotime($tanggal));
-        $ke = substr($i, -s);
-        $bulan = $array_bulan[$ke];
-        $show_date = 
-        */
-                
-        $kontrak = '';
-        
-        if (isset($satker) && isset($tanggal)) {
-            $kontrak = Kontrak::where('kode_satker', $satker)->where('tanggal_terima', $tanggal)->get();
-        }
-        if (isset($tanggal) && empty($satker)) {
-            $kontrak = Kontrak::where('tanggal_terima', $tanggal)->get();
-        }
-        if (isset($satker) && empty($tanggal)) {
-            $kontrak = Kontrak::where('kode_satker', $satker)->get();
-        }
+        $kontrak = $this->query($request);
+        $tanggal_terima = $this->tanggal($request);
                 
         Excel::load('misc\Kontrak.xlsx', function($excel) use ($kontrak, $tanggal_terima) {
             $excel->sheet('Sheet1', function($sheet) use ($kontrak, $tanggal_terima) {

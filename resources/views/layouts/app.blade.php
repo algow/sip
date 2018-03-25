@@ -26,15 +26,14 @@
     <title>Sistem Informasi Penolakan</title>
 
     <!-- Styles -->
-    {!! Charts::styles() !!}
-    <link href="{{ asset('css/font-awesome.min.css') }}" rel='stylesheet' type='text/css'>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/jquery.dataTables.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/dataTables.bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/nprogress.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel='stylesheet' type='text/css' property='stylesheet'>
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" property='stylesheet'>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" property='stylesheet'>
+    <link href="{{ asset('css/jquery.dataTables.css') }}" rel="stylesheet" property='stylesheet'>
+    <link href="{{ asset('css/dataTables.bootstrap.css') }}" rel="stylesheet" property='stylesheet'>
+    <link href="{{ asset('css/custom.min.css') }}" rel="stylesheet" property='stylesheet'>
+    <link href="{{ asset('css/nprogress.css') }}" rel="stylesheet" property='stylesheet'>
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" property='stylesheet'>
     
 </head>
 <body class="nav-md">
@@ -129,7 +128,6 @@
     </div>
 
     <!-- Scripts -->
-    {!! Charts::scripts() !!}
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/js/dashboard.js') }}"></script>
     <script src="{{ asset('admin/js/users/edit.js') }}"></script>

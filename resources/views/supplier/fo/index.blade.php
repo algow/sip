@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -11,6 +11,11 @@
                     @role('admin')
                         <p> <a class="btn btn-primary" href="{{ url('/admin/supplier/create') }}">Rekam Kontrak</a></p>
                     @endrole
+                        <h5 style="margin-top: 1px; margin-bottom: 15px;"><strong>Tanggal Diterima FO</strong> :
+                            @isset($tanggal)
+                                {{ $tanggal_terima }}
+                            @endisset
+                        </h5>
                     <table class="table-striped table-bordered table-hover" id="supplier" width="100%">
                         <thead>
                             <tr>
@@ -38,7 +43,8 @@ $(function() {
     $('#supplier').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{!! route("get.supplier") !!}',
+        ajax: '{{ route($route) }}' + '?jenis=' + '{{ $jenis }}' + '&satker=' + '{{ $satker }}'
+                + '&tanggal=' + '{{ $tanggal }}',
         columns: [
             {data: 'kode_satker', name: 'kode_satker'},
             {data: 'nama_supplier', name: 'nama_supplier'},

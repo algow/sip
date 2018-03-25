@@ -24,13 +24,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ChartController $chart)
     {
         if(Laratrust::hasRole('front_office')) {
             return redirect('fo/filter');
         }
         elseif(Laratrust::hasRole('admin')) {
-            $chart = new ChartController;
             return $chart->index();
         }
         else {
