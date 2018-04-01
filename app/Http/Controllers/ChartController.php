@@ -74,7 +74,7 @@ class ChartController extends Controller
                             ->where('tanggal_terima', $date)
                             ->count();
             
-            $this->iambil[$i] = $spm[$i];
+            $this->diambil[$i] = $spm[$i];
             $i++;
         }
     }
