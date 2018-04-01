@@ -15,9 +15,6 @@ class Satker extends Model
     protected $fillable = ['kode', 'nama_satker', 'whatsapp'];
     
     public function suppliers (){
-        return $this->hasMany('App\Supplier');
-    }
-    public function kontrak (){
-        return $this->hasMany('App\Kontrak');
+        return $this->hasMany('App\Spms');
     }
 }

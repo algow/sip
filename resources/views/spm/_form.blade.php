@@ -1,4 +1,18 @@
 <div class="form-group">
+    <div class="col-md-6">
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
+</div>
+
+<div class="form-group">
   <div class="col-md-6">
     {!! Form::label('kode_satker', 'Kode Satker', ['class'=>'control-label']) !!}
     {!! Form::select('kode_satker', [''=>'']+App\Satker::pluck('kode','kode')->all(), null, ['class'=>'form-control js-example-basic-single']) !!}
@@ -7,10 +21,19 @@
 
 <div class="form-group">
   <div class="col-md-6">
-    {!! Form::label('kode', 'Nomor Kontrak', ['class'=>'control-label']) !!}
+    {{ Form::label('kode', $spm[1], ['class'=>'control-label']) }}
     {!! Form::text('kode', null, ['class'=>'form-control']) !!}
   </div>
 </div>
+
+@isset($spm[3])
+<div class="form-group">
+  <div class="col-md-6">
+    {!! Form::label('tanggal_spm', 'Tanggal SPM', ['class'=>'control-label']) !!}
+    {!! Form::date('tanggal_spm', null, ['class'=>'form-control']) !!}
+  </div>
+</div>
+@endisset
 
 <div class="form-group">
   <div class="col-md-6">
@@ -28,31 +51,19 @@
 
 <div class="form-group">
   <div class="col-md-6">
-    {!! Form::label('nilai_kontrak', 'Nilai Kontrak', ['class'=>'control-label']) !!}
-    {!! Form::text('nilai_kontrak', null, ['class'=>'form-control']) !!}
+    {{ Form::label('nilai_spm', $spm[2], ['class'=>'control-label']) }}
+    {!! Form::text('nilai_spm', null, ['class'=>'form-control']) !!}
   </div>
 </div>
 
 <div class="form-group">
   <div class="col-md-6">
-    {!! Form::label('keterangan', 'Keterangan', ['class'=>'control-label']) !!}
+    {!! Form::label('keterangasn', 'Keterangan', ['class'=>'control-label']) !!}
     {!! Form::text('keterangan', null, ['class'=>'form-control']) !!}
   </div>
 </div>
 
-<div class="form-group">
-    <div class="col-md-6">
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-    </div>
-</div>
+{{ Form::hidden('jenis', $spm[0]) }}
 
 <div class="form-group">
     <div class="col-md-6">

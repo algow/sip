@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
-use Yajra\DataTables\DataTables;
-use App\Supplier;
+use App\Spm;
 use Validator;
-use Yajra\DataTables\Html\Builder;
-use App\Http\Controllers\DatatablesController as IndexTable;
+use App\Http\Controllers\PrefixController as Prefix;
 
 class SupplierController extends Controller
 {
@@ -17,9 +15,9 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Prefix $prefix)
     {
-        return redirect()->away('http://localhost/sipen/public/admin/telusuri?jenis=supplier&satker=&tanggal=');
+        return redirect()->route($prefix->getPrefix() . '.telusuri',['jenis'=>'supplier','satker'=>'','tanggal'=>'']);
     }
 
     /**
@@ -29,7 +27,8 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('supplier.admin.create');
+        $form_filler = array('supplier', 'Kode SPM', 'Nilai SPM', 'Tanggal SPM');
+        return view('spm.admin.create')->with('spm', $form_filler);
     }
 
     /**
@@ -48,8 +47,8 @@ class SupplierController extends Controller
             'nilai_spm' => 'required|numeric',
             'keterangan' => 'required',
             'tanggal_terima' => 'required|date'
-            ]);
-        $supplier = Supplier::create($request->all());
+        ]);
+        $supplier = Spm::create($request->all());
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil menyimpan SPM nomor $supplier->kode"
@@ -77,8 +76,9 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        $supplier = Supplier::find($id);
-        return view('supplier.admin.edit')->with(compact('supplier'))->with('id', $id);
+        $find = Spm::find($id);
+        $form_filler = array('supplier', 'Kode SPM', 'Nilai SPM', 'Tanggal SPM');
+        return view('spm.admin.edit')->with(compact('find'))->with('id', $id)->with('spm', $form_filler);
     }
 
     /**
@@ -99,14 +99,14 @@ class SupplierController extends Controller
             'nilai_spm' => 'required|numeric',
             'keterangan' => 'required'
           ]);
-        $supplier = Supplier::find($id);
+        $supplier = Spm::find($id);
         $supplier->update($request->all());
                 
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil mengubah SPM nomor $supplier->kode"
         ]);
-        return redirect()->route('supplier.index');
+        return redirect()->route('admin.telusuri',['jenis'=>'supplier','satker'=>'','tanggal'=>'']);
     }
 
     /**

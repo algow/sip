@@ -12,7 +12,7 @@
                         <div class="clearfix"></div>
 		      </div>
                       <div class="x_content">
-                        {!! Form::open(['url' => route($route),'method' => 'get', 'class'=>'form-horizontal form-label-left', 'id'=>'demo-form2']) !!}
+                        {!! Form::open(['url' => route($prefix . '.telusuri'),'method' => 'get', 'class'=>'form-horizontal form-label-left', 'id'=>'demo-form2']) !!}
                            @include('filter._form')
                         {!! Form::close() !!}
                       </div>

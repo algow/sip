@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Yajra\DataTables\Html\Builder;
-use Yajra\DataTables\DataTables;
-use App\Kontrak;
+use App\Spm;
 use Validator;
 use Session;
-use App\Http\Controllers\DatatablesController as IndexTable;
+use App\Http\Controllers\PrefixController as Prefix;
 
 class KontrakController extends Controller
 {
@@ -17,9 +15,9 @@ class KontrakController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Prefix $prefix)
     {
-        return redirect()->away('http://localhost/sipen/public/admin/telusuri?jenis=kontrak&satker=&tanggal=');
+        return redirect()->route($prefix->getPrefix() . '.telusuri',['jenis'=>'kontrak','satker'=>'','tanggal'=>'']);
     }
 
     /**
@@ -29,7 +27,8 @@ class KontrakController extends Controller
      */
     public function create()
     {
-        return view('kontrak.admin.create');
+        $form_filler = array('kontrak', 'Nomor Kontrak', 'Nilai Kontrak');
+        return view('spm.admin.create')->with('spm', $form_filler);
     }
 
     /**
@@ -44,11 +43,11 @@ class KontrakController extends Controller
             'kode_satker' => 'required|size:6|exists:satkers,kode',
             'kode' => 'required',
             'nama_supplier' => 'required',
-            'nilai_kontrak' => 'required|numeric',
+            'nilai_spm' => 'required|numeric',
             'keterangan' => 'required',
             'tanggal_terima' => 'required|date'
-            ]);
-        $kontrak = Kontrak::create($request->all());
+        ]);
+        $kontrak = Spm::create($request->all());
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil menyimpan Kontrak nomor $kontrak->kode"
@@ -75,8 +74,9 @@ class KontrakController extends Controller
      */
     public function edit($id)
     {
-        $kontrak = Kontrak::find($id);
-        return view('kontrak.admin.edit')->with(compact('kontrak'))->with('id', $id);
+        $find = Spm::find($id);
+        $form_filler = array('kontrak', 'Nomor Kontrak', 'Nilai Kontrak');
+        return view('spm.admin.edit')->with(compact('find'))->with('id', $id)->with('spm', $form_filler);
     }
 
     /**
@@ -92,16 +92,16 @@ class KontrakController extends Controller
             'kode_satker' => 'required|size:6|exists:satkers,kode',
             'kode' => 'required',
             'nama_supplier' => 'required',
-            'nilai_kontrak' => 'required|numeric',
+            'nilai_spm' => 'required|numeric',
             'keterangan' => 'required'       
           ]);
-        $kontrak = Kontrak::find($id);
+        $kontrak = Spm::find($id);
         $kontrak->update($request->all());
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil mengubah Kontrak nomor $kontrak->kode"
         ]);
-        return redirect()->route('kontrak.index');
+        return redirect()->route('admin.telusuri',['jenis'=>'kontrak','satker'=>'','tanggal'=>'']);
     }
 
     /**
@@ -112,6 +112,11 @@ class KontrakController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Spm::destroy($id);
+        Session::flash("flash_notification", [
+            "level"=>"success",
+            "message"=>"Penulis berhasil dihapus"
+        ]);
+        return redirect()->route('kontrak.index');
     }
 }

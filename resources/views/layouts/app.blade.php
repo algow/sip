@@ -53,7 +53,7 @@
                             <ul class="nav side-menu">
                               @role('admin')
                                 <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Beranda </a></li>
-                                <li><a href="{{route('filter')}}"><i class="fa fa-filter"></i> Filter </a></li>
+                                <li><a href="{{route('admin.filter')}}"><i class="fa fa-filter"></i> Filter </a></li>
                                 <li><a href="{{route('satker.index')}}"><i class="fa fa-users"></i> Daftar Satker </a></li>								
                                 <li class="active"><a><i class="fa fa-plus-square"></i> Rekam Penolakan <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: block">
@@ -68,8 +68,8 @@
                                 <li><a href="{{route('fo.satker')}}"><i class="fa fa-users"></i> Daftar Satker </a></li>								
                                 <li class="active"><a><i class="fa fa-expand"></i> Telusuri <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: block">
-                                        <li><a href="{{route('supplier')}}">Supplier</a></li>
-                                        <li><a href="{{route('kontrak')}}">Kontrak</a></li>
+                                        <li><a href="{{route('fo.supplier')}}">Supplier</a></li>
+                                        <li><a href="{{route('fo.kontrak')}}">Kontrak</a></li>
                                     </ul>
                                 </li>
                               @endrole

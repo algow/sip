@@ -6,11 +6,11 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title">Rekam Kontrak</h2>
+                    <h2 class="panel-title">Ubah {{ ucwords($spm[0]) }}</h2>
                 </div>
                 <div class="panel-body">
-                    {!! Form::open(['url' => route('kontrak.store'), 'method' => 'post', 'class'=>'form-horizontal']) !!}
-                        @include('kontrak.admin._form')
+                    {!! Form::model($find, ['url' => route($spm[0] . '.update', $find->id), 'method' => 'put', 'class'=>'form-horizontal']) !!}
+                        @include('spm.admin._form')
                     {!! Form::close() !!}
                 </div>
             </div>

@@ -9,14 +9,13 @@ use Charts;
 use DateTime;
 use DateInterval;
 use DatePeriod;
-use App\Kontrak;
-use App\Supplier;
+use App\Spm;
 
 class ChartController extends Controller
 {
     protected $dates = array();
-    protected $gabungDiambil = array();
-    protected $gabungDiterima = array();
+    protected $diambil = array();
+    protected $diterima = array();
 
     public function index()
     {
@@ -38,8 +37,8 @@ class ChartController extends Controller
             ->title('Tingkat Pengambilan SPM Tertolak')
             ->colors(['#FF0000', '#0c0099'])
             ->labels($tanggal)
-            ->dataset('Diterima', $this->gabungDiterima)
-            ->dataset('Diambil', $this->gabungDiambil);
+            ->dataset('Diterima', $this->diterima)
+            ->dataset('Diambil', $this->diambil);
         return view('home', ['chart' => $chart]);
     }
     
@@ -71,14 +70,11 @@ class ChartController extends Controller
         $i = 0;
         
         foreach($this->dates as $date){
-            $kontrak[$i] = Kontrak::where('tanda_terima', 1)
-                            ->where('tanggal_terima', $date)
-                            ->count();
-            $supplier[$i] = Supplier::where('tanda_terima', 1)
+            $spm[$i] = Spm::where('tanda_terima', 1)
                             ->where('tanggal_terima', $date)
                             ->count();
             
-            $this->gabungDiambil[$i] = $kontrak[$i] + $supplier[$i];
+            $this->iambil[$i] = $spm[$i];
             $i++;
         }
     }
@@ -88,12 +84,10 @@ class ChartController extends Controller
         $i = 0;
         
         foreach($this->dates as $date){
-            $kontrak[$i] = Kontrak::where('tanggal_terima', $date)
-                            ->count();
-            $supplier[$i] = Supplier::where('tanggal_terima', $date)
+            $spm[$i] = Spm::where('tanggal_terima', $date)
                             ->count();
             
-            $this->gabungDiterima[$i] = $kontrak[$i] + $supplier[$i];
+            $this->diterima[$i] = $spm[$i];
             $i++;
         }
     }
