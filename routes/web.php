@@ -34,6 +34,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function
     Route::resource('satker', 'SatkersController');    
     Route::resource('supplier', 'SupplierController');
     Route::resource('kontrak', 'KontrakController');
+    Route::resource('pmrt', 'PmrtController');
     Route::get('filter', ['as' => 'admin.filter', 'uses' => 'FilterController@filter']);
     Route::get('telusuri', ['as' => 'admin.telusuri', 'uses' => 'FilterController@index']);
     Route::get('eksport', ['as' => 'spm.export', 'uses' => 'ExcelController@exportSpm']);

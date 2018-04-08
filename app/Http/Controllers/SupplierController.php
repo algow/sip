@@ -28,7 +28,7 @@ class SupplierController extends Controller
     public function create()
     {
         $form_filler = array('supplier', 'Kode SPM', 'Nilai SPM', 'Tanggal SPM');
-        return view('spm.admin.create')->with('spm', $form_filler);
+        return view('spm.create')->with('spm', $form_filler);
     }
 
     /**
@@ -78,7 +78,7 @@ class SupplierController extends Controller
     {
         $find = Spm::find($id);
         $form_filler = array('supplier', 'Kode SPM', 'Nilai SPM', 'Tanggal SPM');
-        return view('spm.admin.edit')->with(compact('find'))->with('id', $id)->with('spm', $form_filler);
+        return view('spm.edit')->with(compact('find'))->with('id', $id)->with('spm', $form_filler);
     }
 
     /**
@@ -117,6 +117,11 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Spm::destroy($id);
+        Session::flash("flash_notification", [
+            "level"=>"success",
+            "message"=>"Berhasil menghapus SPM"
+        ]);
+        return redirect()->route('admin.telusuri',['jenis'=>'supplier','satker'=>'','tanggal'=>'']);
     }
 }

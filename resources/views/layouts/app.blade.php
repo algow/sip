@@ -61,6 +61,12 @@
                                         <li><a href="{{route('supplier.create')}}">Supplier</a></li>
                                     </ul>
                                 </li>
+                                <li class="active"><a><i class="fa fa-expand"></i> Telusuri <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: block">
+                                        <li><a href="{{route('supplier.index')}}">Supplier</a></li>
+                                        <li><a href="{{route('kontrak.index')}}">Kontrak</a></li>
+                                    </ul>
+                                </li>
                               @endrole
                               @role('front_office')
                                 <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Beranda </a></li>

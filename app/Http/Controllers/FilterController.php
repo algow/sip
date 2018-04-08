@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Satker;
 use Validator;
 use App\Http\Controllers\DatatablesController as IndexTable;
 use App\Http\Controllers\PrefixController as Prefix;
@@ -18,9 +17,6 @@ class FilterController extends Controller
     
     public function index(Request $request, Builder $htmlBuilder, Prefix $prefix)
     {
-        $this->validate($request, [
-          'jenis' => 'required'
-        ]);
         
         $datatables = new IndexTable($request);
 

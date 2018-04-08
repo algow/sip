@@ -28,7 +28,7 @@ class KontrakController extends Controller
     public function create()
     {
         $form_filler = array('kontrak', 'Nomor Kontrak', 'Nilai Kontrak');
-        return view('spm.admin.create')->with('spm', $form_filler);
+        return view('spm.create')->with('spm', $form_filler);
     }
 
     /**
@@ -41,7 +41,7 @@ class KontrakController extends Controller
     {
         $this->validate($request, [
             'kode_satker' => 'required|size:6|exists:satkers,kode',
-            'kode' => 'required',
+            'kode' => 'required|unique:spms,kode',
             'nama_supplier' => 'required',
             'nilai_spm' => 'required|numeric',
             'keterangan' => 'required',
@@ -50,7 +50,7 @@ class KontrakController extends Controller
         $kontrak = Spm::create($request->all());
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil menyimpan Kontrak nomor $kontrak->kode"
+            "message"=>"Berhasil menyimpan SPM nomor $kontrak->kode"
         ]);
         return redirect()->route('kontrak.create');
     }
@@ -76,7 +76,7 @@ class KontrakController extends Controller
     {
         $find = Spm::find($id);
         $form_filler = array('kontrak', 'Nomor Kontrak', 'Nilai Kontrak');
-        return view('spm.admin.edit')->with(compact('find'))->with('id', $id)->with('spm', $form_filler);
+        return view('spm.edit')->with(compact('find'))->with('id', $id)->with('spm', $form_filler);
     }
 
     /**
@@ -99,7 +99,7 @@ class KontrakController extends Controller
         $kontrak->update($request->all());
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil mengubah Kontrak nomor $kontrak->kode"
+            "message"=>"Berhasil mengubah SPM nomor $kontrak->kode"
         ]);
         return redirect()->route('admin.telusuri',['jenis'=>'kontrak','satker'=>'','tanggal'=>'']);
     }
@@ -115,8 +115,8 @@ class KontrakController extends Controller
         Spm::destroy($id);
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Penulis berhasil dihapus"
+            "message"=>"Berhasil menghapus SPM"
         ]);
-        return redirect()->route('kontrak.index');
+        return redirect()->route('admin.telusuri',['jenis'=>'kontrak','satker'=>'','tanggal'=>'']);
     }
 }

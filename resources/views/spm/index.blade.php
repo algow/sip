@@ -18,20 +18,22 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title">{{ ucwords($jenis) }}</h2>
+                    @isset($jenis)
+                        <h2 class="panel-title">{{ ucwords($jenis) }}</h2>
+                    @endisset
                 </div>
                 <div class="panel-body">
                     <div class="col-md-6" style="float:right; padding-right:1px">
-                        @role('admin')    
-                            <a class="btn btn-info" style="float:right" href="{{ route($jenis . '.create') }}">Rekam {{ $jenis }}</a>
-                            
-                            {{ Form::open(['url' => route('spm.export'), 'method' => 'get', 'style'=>'float:right']) }}
-                                {{ Form::hidden('jenis', $jenis) }}
-                                {{ Form::hidden('satker', $satker) }}
-                                {{ Form::hidden('tanggal', $tanggal) }}
-                                {{ Form::submit('Excel Export', ['class'=>'btn btn-success']) }}
-                            {!! Form::close() !!}
-                            
+                        @role('admin')
+                            @isset($jenis)
+                                <a class="btn btn-info" style="float:right" href="{{ route($jenis . '.create') }}">Rekam {{ $jenis }}</a>                            
+                                {{ Form::open(['url' => route('spm.export'), 'method' => 'get', 'style'=>'float:right']) }}
+                                    {{ Form::hidden('jenis', $jenis) }}
+                                    {{ Form::hidden('satker', $satker) }}
+                                    {{ Form::hidden('tanggal', $tanggal) }}
+                                    {{ Form::submit('Excel Export', ['class'=>'btn btn-success']) }}
+                                {!! Form::close() !!}
+                            @endisset
                         @endrole
                     </div>
                     <div class="col-md-6" style="float:left; padding-left:1px">

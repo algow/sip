@@ -22,11 +22,13 @@ class SatkersController extends Controller
             $query_satker = Satker::select(['kode', 'nama_satker', 'whatsapp']);
             return Datatables::of($query_satker)
                 ->addColumn('action', function($satker){
-                    return view('datatable._aksi', [
-                        'edit_url' => route('satker.edit', $satker->kode),
-                        'kontak' => route('supplier.whatsapp', $satker->kode),
-                        'tanggal' => "I think therefore i am"
-                ]);
+                    return view('datatable._aksi')
+                        ->with('edit_url', route('satker.edit', $satker->kode))
+                        ->with('kontak', route('spm.whatsapp', $satker->kode))
+                        ->with('tanggal', 'I think therefore i am')
+                        ->with('prefix', 'admin')
+                        ->with('pengambil', 'null')
+                        ->with('id', $satker->kode);
             })->make(true);
         }
         $html = $htmlBuilder

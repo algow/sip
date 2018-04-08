@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\QueryController as QueryController;
 use Yajra\DataTables\DataTables;
+use App\Petugas;
 
 class DatatablesController extends Controller
 {
@@ -26,23 +27,29 @@ class DatatablesController extends Controller
     public function spm($request, $htmlBuilder, $prefix)
     {
         $jenis = $request->input('jenis');
-                
+
         if ($request->ajax()) {
             $spm = $this->query->getQuery();
             return DataTables::of($spm)
-                ->addColumn('action', function($spm) use($jenis, $prefix){
-                    return view('datatable._aksi', [
-                        'model' => $spm,
-                        'edit_url' => route($jenis . '.edit', $spm->id),
-                        'kontak' => route('spm.whatsapp', $spm->id),
-                        'tanggal' => $spm->diambil_pada,
-                        'prefix' => $this->prefix($prefix),
-                        'pengambil' => $spm->pengambil,
-                        'id' => $spm->id
-                    ]);
+                ->addColumn('action', function($spm) use($prefix){
+                    return view('datatable._aksi')
+                        ->with('model', $spm)
+                        ->with('edit_url', route($spm->jenis . '.edit', $spm->id))
+                        ->with('delete', route($spm->jenis . '.destroy', $spm->id))
+                        ->with('kontak', route('spm.whatsapp', $spm->id))
+                        ->with('tanggal', $spm->diambil_pada)
+                        ->with('prefix', $this->prefix($prefix))
+                        ->with('pengambil', $spm->petugas['nama_petugas'])
+                        ->with('id', $spm->id);
                 })
                 ->editColumn('tanggal_spm', function ($spm) {
+                  if (is_null($spm['tanggal_spm'])) {
+                    return '';
+                  }
+                  else
+                  {
                   return date('d F Y', strtotime($spm->tanggal_spm));
+                  }
                 })
                 ->editColumn('nilai_spm', function ($spm) {
                   return number_format($spm->nilai_spm, 0, '.', '.');
@@ -63,7 +70,7 @@ class DatatablesController extends Controller
         
         $html = '';
         
-        if($jenis === 'supplier')
+        if($jenis === 'supplier' || empty($jenis))
         {
             $html = $htmlBuilder
                 ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
@@ -75,7 +82,18 @@ class DatatablesController extends Controller
                 ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
                 ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false, 'searchable'=>false]);
         }
-        else {
+        elseif($jenis === 'pmrt')
+        {
+            $html = $htmlBuilder
+                ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
+                ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'Nomor SPM'])
+                ->addColumn(['data' => 'nilai_spm', 'name'=>'nilai_spm', 'title'=>'Nilai Resum Tegihan'])
+                ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])
+                ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
+                ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false, 'searchable'=>false]);
+        }
+        else
+        {
             $html = $htmlBuilder
                 ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
                 ->addColumn(['data' => 'nama_supplier', 'name'=>'nama_supplier', 'title'=>'Nama Supplier'])
@@ -86,6 +104,7 @@ class DatatablesController extends Controller
                 ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
                 ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false, 'searchable'=>false]);
         }
+        
         return view('spm.index')->with(compact('html'))
                     ->with('jenis', $jenis)
                     ->with('satker', $this->query->getSatker())
