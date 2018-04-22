@@ -8,17 +8,18 @@ use App\Satker;
 
 class WaController extends Controller
 {
-    public function hubungi($id){
+    public function hubungi($id)
+    {
 
-        $query_supplier = Spm::find($id);
-        $relation = $query_supplier['kode_satker'];
+        $query = Spm::find($id);
+        $relation = $query['kode_satker'];
         $query_satker = Satker::find($relation);
         $kontak = $query_satker['whatsapp'];
 
-        $spm = $query_supplier['kode'];
-        $diterima = strtotime($query_supplier['tanggal_terima']);
+        $spm = $query['kode'];
+        $diterima = strtotime($query['tanggal_terima']);
         $tanggal = date('d F Y', $diterima);
-        $alasan = strtoupper($query_supplier['keterangan']);
+        $alasan = strtoupper($query['keterangan']);
 
         $pesan = 'Salam%20perbendaharaan%2E%0A%0ASaya%20petugas%20KPPN%20Jakarta%20III%20'
                 . 'menginformasikan%20bahwa%20SPM%20dengan%20nomor%20' . $spm
@@ -32,5 +33,12 @@ class WaController extends Controller
                 . '%20pegawai%20KPPN%20Jakarta%20III%2E';
 
         return redirect()->away('https://web.whatsapp.com/send?phone=' . $kontak . '&text=' . $pesan);
+    }
+    public function ajax()
+    {
+        $id = $_GET['kode'];
+        
+        $namaSatker = Satker::select('nama_satker','kode')->where('kode', $id)->get();
+        return response()->json($namaSatker);
     }
 }

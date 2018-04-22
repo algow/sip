@@ -1,11 +1,7 @@
 <!-- ==========================================
-                                                SISTEM INFORMASI PENOLAKAN ============================================ -->
-<!-- ==========================================
-                                                    Author: ALGO WIJAYA    ============================================ -->
+                                                SISTEM KONFIRMASI & PENOLAKAN ============================================ -->
 <!-- ==========================================
                                                       KPPN JAKARTA III     ============================================ -->
-<!-- ==========================================
-                                                     Powered by: LARAVEL   ============================================ -->
 <!-- ==========================================
                                                         Thanks to:         ============================================ -->
 <!-- ==========================================
@@ -23,7 +19,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Sistem Informasi Penolakan</title>
+    <title>Sinkron SPM</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/font-awesome.min.css') }}" rel='stylesheet' type='text/css' property='stylesheet'>
@@ -42,7 +38,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="#" class="site_title"><i class="fa fa-location-arrow"></i> <span>Penolakan SPM</span></a>
+                        <a href="#" class="site_title"><i class="fa fa-location-arrow"></i> <span>Sinkron SPM</span></a>
                     </div>
                     <div class="clearfix"></div>
                     <br />
@@ -58,13 +54,13 @@
                                 <li class="active"><a><i class="fa fa-plus-square"></i> Rekam Penolakan <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: block">
                                         <li><a href="{{route('kontrak.create')}}">Kontrak</a></li>
-                                        <li><a href="{{route('supplier.create')}}">Supplier</a></li>
+                                        <li><a href="{{route('spm.create')}}">SPM</a></li>
                                     </ul>
                                 </li>
                                 <li class="active"><a><i class="fa fa-expand"></i> Telusuri <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: block">
-                                        <li><a href="{{route('supplier.index')}}">Supplier</a></li>
                                         <li><a href="{{route('kontrak.index')}}">Kontrak</a></li>
+                                        <li><a href="{{route('spm.index')}}">SPM</a></li>
                                     </ul>
                                 </li>
                               @endrole
@@ -74,7 +70,7 @@
                                 <li><a href="{{route('fo.satker')}}"><i class="fa fa-users"></i> Daftar Satker </a></li>								
                                 <li class="active"><a><i class="fa fa-expand"></i> Telusuri <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: block">
-                                        <li><a href="{{route('fo.supplier')}}">Supplier</a></li>
+                                        <li><a href="{{route('fo.supplier')}}">SPM</a></li>
                                         <li><a href="{{route('fo.kontrak')}}">Kontrak</a></li>
                                     </ul>
                                 </li>
@@ -147,5 +143,5 @@
 </html>
 
 <!--
-AW
+    algow64@gmail.com
 -->

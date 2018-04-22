@@ -12,7 +12,7 @@
 <div class="form-group">
   <div class="col-md-6">
     {!! Form::label('jenis', 'Jenis Dokumen:', ['class'=>'control-label']) !!}
-    {!! Form::select('jenis', array('' => '-- Semua --', 'kontrak' => 'Kontrak', 'pmrt' => 'PMRT', 'supplier' => 'Supplier'), null, ['class'=>'form-control']) !!}
+    {!! Form::select('jenis', array('' => '-- Semua --', 'kontrak' => 'Kontrak', 'spm' => 'SPM'), null, ['class'=>'form-control']) !!}
   </div>
 </div>
 

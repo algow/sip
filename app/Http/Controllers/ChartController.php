@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-// http://github.com/ConsoleTVs/Charts
+// Pake package enih github.com/ConsoleTVs/Charts
 
 use Illuminate\Http\Request;
 use Charts;
@@ -22,10 +22,10 @@ class ChartController extends Controller
         $this->dateRange();
         $this->diambil();
         $this->diterima();
-        
+
         $tanggal = array();
         $i = 0;
-        
+
         foreach($this->dates as $date){
             $value = strtotime($date);
             $tanggal[$i] = date("j M", $value);
@@ -41,7 +41,7 @@ class ChartController extends Controller
             ->dataset('Diambil', $this->diambil);
         return view('home', ['chart' => $chart]);
     }
-    
+
     public function dateRange()
     {
         $now = date("Y-m-d");
@@ -50,11 +50,11 @@ class ChartController extends Controller
 
 	$begin = new DateTime($then);
 	$end = new DateTime($now);
-	$ends = $end->modify( '+1 day' ); 
+	$ends = $end->modify( '+1 day' );
 
 	$interval = new DateInterval('P1D');
 	$daterange = new DatePeriod($begin, $interval ,$ends);
-        
+
         $i = 0;
         foreach($daterange as $date){
             $cond = $date->format("N");
@@ -64,29 +64,29 @@ class ChartController extends Controller
             $i++;
         }
     }
-    
+
     public function diambil()
     {
         $i = 0;
-        
+
         foreach($this->dates as $date){
             $spm[$i] = Spm::where('tanda_terima', 1)
                             ->where('tanggal_terima', $date)
                             ->count();
-            
+
             $this->diambil[$i] = $spm[$i];
             $i++;
         }
     }
-    
+
     public function diterima()
     {
         $i = 0;
-        
+
         foreach($this->dates as $date){
             $spm[$i] = Spm::where('tanggal_terima', $date)
                             ->count();
-            
+
             $this->diterima[$i] = $spm[$i];
             $i++;
         }

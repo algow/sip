@@ -17,7 +17,7 @@ class SupplierController extends Controller
      */
     public function index(Prefix $prefix)
     {
-        return redirect()->route($prefix->getPrefix() . '.telusuri',['jenis'=>'supplier','satker'=>'','tanggal'=>'']);
+        return redirect()->route($prefix->getPrefix() . '.telusuri',['jenis'=>'spm','satker'=>'','tanggal'=>'']);
     }
 
     /**
@@ -27,7 +27,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        $form_filler = array('supplier', 'Kode SPM', 'Nilai SPM', 'Tanggal SPM');
+        $form_filler = array('spm', 'Kode SPM', 'Nilai SPM', 'Tanggal SPM');
         return view('spm.create')->with('spm', $form_filler);
     }
 
@@ -45,15 +45,14 @@ class SupplierController extends Controller
             'nama_supplier' => 'required',
             'tanggal_spm' => 'required|date',
             'nilai_spm' => 'required|numeric',
-            'keterangan' => 'required',
             'tanggal_terima' => 'required|date'
         ]);
-        $supplier = Spm::create($request->all());
+        $spm = Spm::create($request->all());
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil menyimpan SPM nomor $supplier->kode"
+            "message"=>"Berhasil menyimpan SPM nomor $spm->kode"
         ]);
-        return redirect()->route('supplier.create');
+        return redirect()->route('spm.create');
 
     }
 
@@ -77,7 +76,7 @@ class SupplierController extends Controller
     public function edit($id)
     {
         $find = Spm::find($id);
-        $form_filler = array('supplier', 'Kode SPM', 'Nilai SPM', 'Tanggal SPM');
+        $form_filler = array('spm', 'Kode SPM', 'Nilai SPM', 'Tanggal SPM');
         return view('spm.edit')->with(compact('find'))->with('id', $id)->with('spm', $form_filler);
     }
 
@@ -97,16 +96,15 @@ class SupplierController extends Controller
             'nama_supplier' => 'required',
             'tanggal_spm' => 'required|date',
             'nilai_spm' => 'required|numeric',
-            'keterangan' => 'required'
           ]);
-        $supplier = Spm::find($id);
-        $supplier->update($request->all());
+        $spm = Spm::find($id);
+        $spm->update($request->all());
                 
         Session::flash("flash_notification", [
             "level"=>"success",
-            "message"=>"Berhasil mengubah SPM nomor $supplier->kode"
+            "message"=>"Berhasil mengubah SPM nomor $spm->kode"
         ]);
-        return redirect()->route('admin.telusuri',['jenis'=>'supplier','satker'=>'','tanggal'=>'']);
+        return redirect()->route('admin.telusuri',['jenis'=>'spm','satker'=>'','tanggal'=>'']);
     }
 
     /**
@@ -122,6 +120,6 @@ class SupplierController extends Controller
             "level"=>"success",
             "message"=>"Berhasil menghapus SPM"
         ]);
-        return redirect()->route('admin.telusuri',['jenis'=>'supplier','satker'=>'','tanggal'=>'']);
+        return redirect()->route('admin.telusuri',['jenis'=>'spm','satker'=>'','tanggal'=>'']);
     }
 }

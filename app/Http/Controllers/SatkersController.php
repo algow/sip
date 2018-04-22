@@ -23,7 +23,9 @@ class SatkersController extends Controller
             return Datatables::of($query_satker)
                 ->addColumn('action', function($satker){
                     return view('datatable._aksi')
+                        ->with('model', $satker)
                         ->with('edit_url', route('satker.edit', $satker->kode))
+                        ->with('delete', null)
                         ->with('kontak', route('spm.whatsapp', $satker->kode))
                         ->with('tanggal', 'I think therefore i am')
                         ->with('prefix', 'admin')

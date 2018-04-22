@@ -32,10 +32,10 @@ Route::group(['prefix'=>'fo', 'middleware'=>['auth', 'role:front_office']], func
 Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function ()
 {
     Route::resource('satker', 'SatkersController');    
-    Route::resource('supplier', 'SupplierController');
+    Route::resource('spm', 'SupplierController');
     Route::resource('kontrak', 'KontrakController');
-    Route::resource('pmrt', 'PmrtController');
     Route::get('filter', ['as' => 'admin.filter', 'uses' => 'FilterController@filter']);
+    Route::get('nama', ['as' => 'nama', 'uses' => 'WaController@ajax']);
     Route::get('telusuri', ['as' => 'admin.telusuri', 'uses' => 'FilterController@index']);
     Route::get('eksport', ['as' => 'spm.export', 'uses' => 'ExcelController@exportSpm']);
     Route::get('kontak/{id}', ['as' => 'spm.whatsapp', 'uses' => 'WaController@hubungi']);

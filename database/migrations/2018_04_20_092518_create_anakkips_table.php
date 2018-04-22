@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddJenisToSpms extends Migration
+class CreateAnakkipsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddJenisToSpms extends Migration
      */
     public function up()
     {
-        Schema::table('spms', function (Blueprint $table) {
-            $table->string('jenis', 10);
+        Schema::create('anakkips', function (Blueprint $table) {
+            $table->char('kode_satker', 6);
+            $table->char('anak_satker', 6);
+            $table->foreign('kode_satker')->references('kode')->on('satkers');
         });
     }
 
@@ -25,8 +27,6 @@ class AddJenisToSpms extends Migration
      */
     public function down()
     {
-        Schema::table('spms', function($table) {
-            $table->dropColumn('jenis');
-        });
+        Schema::dropIfExists('anakkips');
     }
 }

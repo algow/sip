@@ -70,7 +70,7 @@ class DatatablesController extends Controller
         
         $html = '';
         
-        if($jenis === 'supplier' || empty($jenis))
+        if($jenis === 'spm' || empty($jenis))
         {
             $html = $htmlBuilder
                 ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
@@ -78,16 +78,6 @@ class DatatablesController extends Controller
                 ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'Nomor SPM'])
                 ->addColumn(['data' => 'tanggal_spm', 'name'=>'tanggal_spm', 'title'=>'Tanggal SPM'])
                 ->addColumn(['data' => 'nilai_spm', 'name'=>'nilai_spm', 'title'=>'Nilai SPM'])
-                ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])
-                ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
-                ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false, 'searchable'=>false]);
-        }
-        elseif($jenis === 'pmrt')
-        {
-            $html = $htmlBuilder
-                ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
-                ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'Nomor SPM'])
-                ->addColumn(['data' => 'nilai_spm', 'name'=>'nilai_spm', 'title'=>'Nilai Resum Tegihan'])
                 ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])
                 ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
                 ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false, 'searchable'=>false]);

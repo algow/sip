@@ -29,7 +29,7 @@ class ExcelController extends Controller
                 $i = 1;
                 $rows = 3;
                 
-                if($spm[2] == 'supplier')
+                if($spm[2] == 'spm')
                 {
                     foreach ($spm[0] as $spm) {
                         $sheet->prependRow(++$rows, [

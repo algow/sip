@@ -44,7 +44,7 @@ class KontrakController extends Controller
             'kode' => 'required|unique:spms,kode',
             'nama_supplier' => 'required',
             'nilai_spm' => 'required|numeric',
-            'keterangan' => 'required',
+            'keterangan' => 'required|file',
             'tanggal_terima' => 'required|date'
         ]);
         $kontrak = Spm::create($request->all());

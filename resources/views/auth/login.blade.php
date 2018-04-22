@@ -1,11 +1,7 @@
 <!-- ==========================================
-                                                SISTEM INFORMASI PENOLAKAN ============================================ -->
-<!-- ==========================================
-                                                    Author: ALGO WIJAYA    ============================================ -->
+                                                SISTEM KONFIRMASI & PENOLAKAN ============================================ -->
 <!-- ==========================================
                                                       KPPN JAKARTA III     ============================================ -->
-<!-- ==========================================
-                                                     Powered by: LARAVEL   ============================================ -->
 
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
@@ -33,7 +29,7 @@
                 <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
                     <span class="login100-form-title">
-                        Sistem Informasi Penolakan
+                        Sistem Konfirmasi & Penolakan
                     </span>
                     <div class="wrap-input100 rs1{{ $errors->has('email') ? ' has-error' : '' }}">
                         <input id="email" class="input100" type="text" name="email" value="{{ old('email') }}" required autofocus>
@@ -74,3 +70,6 @@
     <script src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>
+<!--
+    algow64@gmail.com
+-->

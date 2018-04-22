@@ -8,9 +8,10 @@ and open the template in the editor.
     Author     : Algow
 */
 .welcomebody {
-    background: linear-gradient(#283c86, #005fa3, #007b9c, #009177, #45a247);
+    background-image: url("bg_sinc.jpg");
     height: 100%;
     margin: 0;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
 }
