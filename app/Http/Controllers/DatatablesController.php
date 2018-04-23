@@ -51,6 +51,9 @@ class DatatablesController extends Controller
                   return date('d F Y', strtotime($spm->tanggal_spm));
                   }
                 })
+                ->editColumn('tanggal_terima', function ($spm) {
+                  return date('d F Y', strtotime($spm->tanggal_terima));
+                })
                 ->editColumn('nilai_spm', function ($spm) {
                   return number_format($spm->nilai_spm, 0, '.', '.');
                 })
@@ -61,9 +64,6 @@ class DatatablesController extends Controller
                   else {
                     return date('d F Y', strtotime($spm->diambil_pada) );
                   }
-                })
-                ->editColumn('tanggal_terima', function ($spm) {
-                        return date('d F Y', strtotime($spm->tanggal_terima));
                 })
             ->make(true);            
         }
@@ -80,7 +80,7 @@ class DatatablesController extends Controller
                 ->addColumn(['data' => 'nilai_spm', 'name'=>'nilai_spm', 'title'=>'Nilai SPM'])
                 ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])
                 ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
-                ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false, 'searchable'=>false]);
+                ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false]);
         }
         else
         {
@@ -92,7 +92,7 @@ class DatatablesController extends Controller
                 ->addColumn(['data' => 'nilai_spm', 'name'=>'nilai_spm', 'title'=>'Nilai Kontrak'])
                 ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])
                 ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
-                ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false, 'searchable'=>false]);
+                ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false]);
         }
         
         return view('spm.index')->with(compact('html'))

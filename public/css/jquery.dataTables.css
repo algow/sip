@@ -65,7 +65,7 @@ table.dataTable tbody tr.selected {
 }
 table.dataTable tbody th,
 table.dataTable tbody td {
-  padding: 1px 4px;
+  padding: 1px 2px;
 }
 table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {
   border-top: 1px solid #ddd;
@@ -187,7 +187,7 @@ table.dataTable.compact tbody td {
 }
 table.dataTable th.dt-left,
 table.dataTable td.dt-left {
-  text-align: left;
+  text-align: center;
 }
 table.dataTable th.dt-center,
 table.dataTable td.dt-center,
@@ -238,7 +238,7 @@ table.dataTable tfoot td.dt-head-nowrap {
 }
 table.dataTable tbody th.dt-body-left,
 table.dataTable tbody td.dt-body-left {
-  text-align: left;
+  text-align: center;
 }
 table.dataTable tbody th.dt-body-center,
 table.dataTable tbody td.dt-body-center {

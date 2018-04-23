@@ -52,7 +52,14 @@ class PengambilSpmController extends Controller
                 
         $validasi1 = Petugas::where('barcode', $pengambil)->where('kode_satker', $spm->kode_satker)->first();
         $petugas = Petugas::where('barcode', $pengambil)->first();
-        $validasi2 = Anakkips::where('kode_satker', $petugas->kode_satker)->where('anak_satker', $spm->kode_satker)->first();
+        
+        if (is_null($petugas))
+        {
+            $validasi2 = null;
+        }
+        else {
+            $validasi2 = Anakkips::where('kode_satker', $petugas->kode_satker)->where('anak_satker', $spm->kode_satker)->first();
+        }
         
         if (is_null($validasi1) && is_null($validasi2))
         {
