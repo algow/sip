@@ -19,18 +19,10 @@
   </div>
 </div>
 
-<div class="form-group" style="margin:0px 0 2px 10px">
-    <div class="form-check">
-    {!! Form::checkbox('set_default', null, null, ['class' => 'form-check-input', 'id'=>'set-default', 'onChange'=>'setDefault()']) !!}
-    {!! Form::label('keterangan', 'Tetapkan nilai default pada Nama Supplier dan Keterangan', ['class' => 'form-check-label']) !!}
-    </div>
-</div>
-
-
 <div class="form-group">
   <div class="col-md-6">
     {{ Form::label('kode', $spm[1], ['class'=>'control-label']) }}
-    {!! Form::text('kode', null, ['class'=>'form-control']) !!}
+    {!! Form::text('kode', null, ['class'=>'form-control', 'id'=>'kode']) !!}
   </div>
 </div>
 
@@ -50,6 +42,15 @@
   </div>
 </div>
 
+@if($spm[0] === "spm")
+<div class="form-group" style="margin:0px 0 2px 10px">
+    <div class="form-check">
+    {!! Form::checkbox('set_default', null, null, ['class' => 'form-check-input', 'id'=>'set-default', 'onChange'=>'setDefault()']) !!}
+    {!! Form::label('keterangan', 'Tetapkan Nama Satker sebagai Nama Supplier', ['class' => 'form-check-label']) !!}
+    </div>
+</div>
+@endif
+
 <div class="form-group">
   <div class="col-md-6">
     {!! Form::label('nama_supplier', 'Nama Supplier', ['class'=>'control-label']) !!}
@@ -64,6 +65,13 @@
   </div>
 </div>
 
+<div class="form-group" style="margin:0px 0 2px 10px">
+    <div class="form-check">
+    {!! Form::checkbox('set_default', null, null, ['class' => 'form-check-input', 'id'=>'set-default2']) !!}
+    {!! Form::label('keterangan', 'Tetapkan default Keterangan', ['class' => 'form-check-label']) !!}
+    </div>
+</div>
+
 <div class="form-group" id="hidden-keterangan">
   <div class="col-md-6">
     {!! Form::label('keterangan', 'Keterangan', ['class'=>'control-label']) !!}
@@ -71,7 +79,7 @@
   </div>
 </div>
 
-{{ Form::hidden('jenis', $spm[0]) }}
+{{ Form::hidden('jenis', $spm[0], ['id'=>'jenis']) }}
 
 <div class="form-group">
     <div class="col-md-6">
@@ -81,32 +89,50 @@
 
 @section('scripts')
 <script>
-function setDefault()
-{
-    var satker = $('#kode-satker').val();
-    
-    $.ajax({
-        dataType:"json",
-        type:"GET",
-        url:"{{ route('nama') }}",
-        data: { "kode" : satker },
-        success: function(data) {
-            $("#get-supplier").val(data[0].nama_satker);
-        }
+    function setDefault()
+    {
+        var satker = $('#kode-satker').val();
+
+        $.ajax({
+            dataType:"json",
+            type:"GET",
+            url:"{{ route('nama') }}",
+            data: { "kode" : satker },
+            success: function(data) {
+                $("#get-supplier").val(data[0].nama_satker);
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        $('#set-default2').on('change', function(){
+            if(this.checked)
+                $("#get-keterangan").attr({
+                    "value" : "Sesuai dengan keterangan sistem"
+                });
+            else
+                $('#get-keterangan').attr({
+                    "value" : ""
+                });
+        });
+
+        $('.btn').on('click', function () {
+            var kode = $("#kode").val();
+            var jenis = $("#jenis").val();
+
+            if(jenis === "kontrak" && kode.length < 6)
+            {
+                return confirm('Apakah anda yakin sedang menginput PENOLAKAN KONTRAK?');
+            }
+            else if(jenis === "spm" && kode.length > 5)
+            {
+                return confirm('Apakah anda yakin sedang menginput PENOLAKAN SPM?');
+            }
+            else
+            {
+                return true;
+            }
+        });
     });
-}
-    
-$(document).ready(function(){
-    $('#set-default').on('change', function(){
-        if(this.checked)
-            $("#get-keterangan").attr({
-                "value" : "Sesuai dengan keterangan sistem"
-            });
-        else
-            $('#get-keterangan').attr({
-                "value" : ""
-            });
-    });
-});
 </script>
 @endsection

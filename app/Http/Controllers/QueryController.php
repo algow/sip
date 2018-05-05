@@ -8,19 +8,18 @@ use App\Petugas;
 
 class QueryController extends Controller
 {
-    
     protected $query_satker;
     protected $query_tanggal;
     protected $tanggal_terima;
     protected $jenis;
     protected $query;
-    
+
     public function __construct($request) {
         $this->query_satker = $request->input('satker');
         $this->query_tanggal = $request->input('tanggal');
         $this->jenis = $request->input('jenis');
         $this->tanggal_terima = date('d F Y', strtotime($this->query_tanggal));
-        
+
         if(empty($this->jenis))
         {
             if (isset($this->query_satker) && empty($this->query_tanggal)) {
@@ -57,7 +56,7 @@ class QueryController extends Controller
             }
         }
     }
-    
+
     public function getSatker(){
         return $this->query_satker;
     }

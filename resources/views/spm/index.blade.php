@@ -49,8 +49,8 @@
         </div>
     </div>
 </div>
-@endsection
+@stop
 
 @section('scripts')
-{!! $html->scripts() !!}
-@endsection
+    {!! $html->scripts() !!}
+@stop

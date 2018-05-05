@@ -13,7 +13,7 @@
             <url>app/Http/Controllers/DatatablesController.php</url>
             <bookmark id="3">
                 <name/>
-                <line>107</line>
+                <line>103</line>
                 <key/>
             </bookmark>
         </file>
@@ -30,7 +30,6 @@
         <group>
             <file>file:/C:/xampp/htdocs/sipen/routes/web.php</file>
             <file>file:/C:/xampp/htdocs/sipen/app/Http/Controllers/PengambilSpmController.php</file>
-            <file>file:/C:/xampp/htdocs/sipen/resources/views/spm/_form.blade.php</file>
         </group>
     </open-files>
 </project-private>

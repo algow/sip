@@ -45,15 +45,15 @@ class ChartController extends Controller
     public function dateRange()
     {
         $now = date("Y-m-d");
-	$dstring = strtotime("6 weeks ago");
-	$then = date("Y-m-d", $dstring);
+      	$dstring = strtotime("6 weeks ago");
+      	$then = date("Y-m-d", $dstring);
 
-	$begin = new DateTime($then);
-	$end = new DateTime($now);
-	$ends = $end->modify( '+1 day' );
+      	$begin = new DateTime($then);
+      	$end = new DateTime($now);
+      	$ends = $end->modify( '+1 day' );
 
-	$interval = new DateInterval('P1D');
-	$daterange = new DatePeriod($begin, $interval ,$ends);
+      	$interval = new DateInterval('P1D');
+      	$daterange = new DatePeriod($begin, $interval ,$ends);
 
         $i = 0;
         foreach($daterange as $date){
