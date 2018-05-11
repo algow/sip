@@ -30,7 +30,7 @@
     <link href="{{ asset('css/custom.min.css') }}" rel="stylesheet" property='stylesheet'>
     <link href="{{ asset('css/nprogress.css') }}" rel="stylesheet" property='stylesheet'>
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" property='stylesheet'>
-    
+
 </head>
 <body class="nav-md">
     <div class="container body">
@@ -50,15 +50,16 @@
                               @role('admin')
                                 <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Beranda </a></li>
                                 <li><a href="{{route('admin.filter')}}"><i class="fa fa-filter"></i> Filter </a></li>
-                                <li><a href="{{route('satker.index')}}"><i class="fa fa-users"></i> Daftar Satker </a></li>								
+                                <li><a href="{{route('satker.index')}}"><i class="fa fa-users"></i> Daftar Satker </a></li>
                                 <li class="active"><a><i class="fa fa-plus-square"></i> Rekam Penolakan <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: block">
                                         <li><a href="{{route('kontrak.create')}}">Kontrak</a></li>
                                         <li><a href="{{route('spm.create')}}">SPM</a></li>
                                     </ul>
                                 </li>
-                                <li class="active"><a><i class="fa fa-expand"></i> Telusuri <span class="fa fa-chevron-down"></span></a>
+                                <li><a><i class="fa fa-expand"></i> Telusuri <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: block">
+                                        <li><a href="telusuri?jenis=&satker=&tanggal=">Semua</a></li>
                                         <li><a href="{{route('kontrak.index')}}">Kontrak</a></li>
                                         <li><a href="{{route('spm.index')}}">SPM</a></li>
                                     </ul>
@@ -67,7 +68,7 @@
                               @role('front_office')
                                 <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Beranda </a></li>
                                 <li><a href="{{route('fo.filter')}}"><i class="fa fa-filter"></i> Filter </a></li>
-                                <li><a href="{{route('fo.satker')}}"><i class="fa fa-users"></i> Daftar Satker </a></li>								
+                                <li><a href="{{route('fo.satker')}}"><i class="fa fa-users"></i> Daftar Satker </a></li>
                                 <li class="active"><a><i class="fa fa-expand"></i> Telusuri <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: block">
                                         <li><a href="{{route('fo.supplier')}}">SPM</a></li>

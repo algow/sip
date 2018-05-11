@@ -71,7 +71,7 @@ class ChartController extends Controller
 
         foreach($this->dates as $date){
             $spm[$i] = Spm::where('tanda_terima', 1)
-                            ->where('tanggal_terima', $date)
+                            ->where('diambil_pada', $date)
                             ->count();
 
             $this->diambil[$i] = $spm[$i];
@@ -84,8 +84,7 @@ class ChartController extends Controller
         $i = 0;
 
         foreach($this->dates as $date){
-            $spm[$i] = Spm::where('tanggal_terima', $date)
-                            ->count();
+            $spm[$i] = Spm::where('tanggal_terima', $date)->count();
 
             $this->diterima[$i] = $spm[$i];
             $i++;

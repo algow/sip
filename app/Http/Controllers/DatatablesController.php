@@ -9,21 +9,21 @@ use App\Petugas;
 
 class DatatablesController extends Controller
 {
-    
+
     protected $query;
-    
+
     public function __construct($request)
     {
         $this->query = new QueryController($request);
     }
-    
+
     public function prefix($prefix)
     {
         $theprefix = $prefix->getPrefix();
-        
+
         return $theprefix;
     }
-        
+
     public function spm($request, $htmlBuilder, $prefix)
     {
         $jenis = $request->input('jenis');
@@ -48,7 +48,7 @@ class DatatablesController extends Controller
                   }
                   else
                   {
-                  return date('d F Y', strtotime($spm->tanggal_spm));
+                  return date('d-m-Y', strtotime($spm->tanggal_spm));
                   }
                 })
                 ->editColumn('tanggal_terima', function ($spm) {
@@ -65,19 +65,32 @@ class DatatablesController extends Controller
                     return date('d F Y', strtotime($spm->diambil_pada) );
                   }
                 })
-            ->make(true);            
+            ->make(true);
         }
-        
+
         $html = '';
-        
-        if($jenis === 'spm' || empty($jenis))
+
+        if($jenis === 'spm')
         {
             $html = $htmlBuilder
                 ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
                 ->addColumn(['data' => 'nama_supplier', 'name'=>'nama_supplier', 'title'=>'Nama Supplier'])
+                ->addColumn(['data' => 'tanggal_terima', 'name'=>'tanggal_terima', 'title'=>'Tanggal Terima'])
                 ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'Nomor SPM'])
                 ->addColumn(['data' => 'tanggal_spm', 'name'=>'tanggal_spm', 'title'=>'Tanggal SPM'])
                 ->addColumn(['data' => 'nilai_spm', 'name'=>'nilai_spm', 'title'=>'Nilai SPM'])
+                ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])
+                ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
+                ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false]);
+        }
+        elseif($jenis === null)
+        {
+            $html = $htmlBuilder
+                ->addColumn(['data' => 'kode_satker', 'name'=>'kode_satker', 'title'=>'Kode Satker'])
+                ->addColumn(['data' => 'nama_supplier', 'name'=>'nama_supplier', 'title'=>'Nama Supplier'])
+                ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'Nomor Dok'])
+                ->addColumn(['data' => 'tanggal_terima', 'name'=>'tanggal_terima', 'title'=>'Tanggal Terima'])
+                ->addColumn(['data' => 'nilai_spm', 'name'=>'nilai_spm', 'title'=>'Nilai'])
                 ->addColumn(['data' => 'keterangan', 'name'=>'keterangan', 'title'=>'Keterangan'])
                 ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
                 ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false]);
@@ -94,7 +107,7 @@ class DatatablesController extends Controller
                 ->addColumn(['data' => 'diambil_pada', 'name'=>'diambil_pada', 'title'=>'Diambil Pada'])
                 ->addColumn(['data' => 'action', 'name'=>'action', 'title'=>'Aksi', 'orderable'=>false]);
         }
-        
+
         return view('spm.index')->with(compact('html'))
                     ->with('jenis', $jenis)
                     ->with('satker', $this->query->getSatker())

@@ -7,6 +7,7 @@ use Session;
 use App\Spm;
 use Validator;
 use App\Http\Controllers\PrefixController as Prefix;
+use App\Http\Controllers\SmsGateway as Sms;
 
 class SupplierController extends Controller
 {
@@ -48,6 +49,10 @@ class SupplierController extends Controller
             'tanggal_terima' => 'required|date'
         ]);
         $spm = Spm::create($request->all());
+
+        $sms = new Sms($spm);
+        $sms->send();
+
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil menyimpan SPM nomor $spm->kode"
@@ -99,7 +104,7 @@ class SupplierController extends Controller
           ]);
         $spm = Spm::find($id);
         $spm->update($request->all());
-                
+
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil mengubah SPM nomor $spm->kode"

@@ -1,5 +1,5 @@
 <!-- ==========================================
-                                                SISTEM KONFIRMASI & PENOLAKAN ============================================ -->
+                                                Sistem Informasi & Konfirmasi Penolakan ============================================ -->
 <!-- ==========================================
                                                       KPPN JAKARTA III     ============================================ -->
 
@@ -20,7 +20,7 @@
     <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/util.css') }}" rel="stylesheet">
-    
+
 </head>
 <body class="welcomebody">
     <div class="limiter">
@@ -29,11 +29,11 @@
                 <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
                     <span class="login100-form-title">
-                        Sistem Konfirmasi & Penolakan
+                        Sistem Informasi & Konfirmasi Penolakan
                     </span>
                     <div class="wrap-input100 rs1{{ $errors->has('email') ? ' has-error' : '' }}">
                         <input id="email" class="input100" type="text" name="email" value="{{ old('email') }}" required autofocus>
-                        <span class="label-input100">Username</span>											
+                        <span class="label-input100">Username</span>
                     </div>
                     <div class="wrap-input100 rs2{{ $errors->has('password') ? ' has-error' : '' }}">
                         <input class="input100" type="password" name="password" required>

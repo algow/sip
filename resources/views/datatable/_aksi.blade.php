@@ -18,11 +18,11 @@
     @endisset
     @empty($tanggal)
         <button type="button" class="btn-md btn-success btn-{{ $id }}"><i class="fa fa-play fa-md"></i></button>
-        <form action = "{{ route('spm.diambil') }}" method = "POST" class = "form-hide-{{ $id }}" onSubmit="setPetugas(event);">
+        <form action = "{{ route('spm.diambil') }}" method = "POST" class = "form-hide-{{ $id }}" onSubmit="return setPetugas(event);">
            {{ csrf_field() }}
            {{ Form::hidden('id', $id) }}
            {{ Form::text('pengambil', null, ['class'=>'form-control input-sm']) }}
-           {{ Form::submit('Go', ['class'=>'btn btn-info btn-xs', 'id'=>'submit-' . $id]) }}
+           <button id="btn-{{ $id }}" class="btn-md btn-primary">Go</button>
         </form>
     @endempty
 @endif
@@ -44,7 +44,6 @@
 
     function setPetugas(e)
     {
-        e.preventDefault();
         var _token = $("input[name='_token']").val();
         var id = $("input[name='id']").val();
         var pengambil = $("input[name='pengambil']").val();
@@ -55,8 +54,11 @@
             url: "{{ route('spm.diambil') }}",
             data: {"_token" : _token, "id" : id, "pengambil" : pengambil},
             success: function(data) {
-              alert(data[1]);
+              $(".form-hide-{{ $id }}").empty();
+              $(".form-hide-{{ $id }}").val(data[1]);
             }
         });
+        e.preventDefault();
+        return false;
     }
 </script>
