@@ -47,7 +47,7 @@ class WaController extends Controller
     }
     public function ajax()
     {
-        $id = $_GET['kode'];
+        $id = htmlentities(strip_tags(trim($_GET['kode'])));
 
         $namaSatker = Satker::select('nama_satker','kode')->where('kode', $id)->get();
         return response()->json($namaSatker);

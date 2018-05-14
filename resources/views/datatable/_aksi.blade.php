@@ -22,7 +22,6 @@
            {{ csrf_field() }}
            {{ Form::hidden('id', $id) }}
            {{ Form::text('pengambil', null, ['class'=>'form-control input-sm']) }}
-           <button id="btn-{{ $id }}" class="btn-md btn-primary">Go</button>
         </form>
     @endempty
 @endif
@@ -54,8 +53,7 @@
             url: "{{ route('spm.diambil') }}",
             data: {"_token" : _token, "id" : id, "pengambil" : pengambil},
             success: function(data) {
-              $(".form-hide-{{ $id }}").empty();
-              $(".form-hide-{{ $id }}").val(data[1]);
+              alert('Keterangan: ' + data[1]);
             }
         });
         e.preventDefault();
