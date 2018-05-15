@@ -27,7 +27,8 @@ class SmsGateway extends Controller
         $kontak = $this->satker->satker->whatsapp;
         $content = array($kontak, $this->jenis, $this->nomor, $this->tanggal, $this->keterangan);
         $contentJson = '"' . addslashes(json_encode($content)) . '"';
-
+        print_r($contentJson);
+        die();
         $execPy = "python ../sms-py/sms.py $contentJson";
 
         exec($execPy, $dump);
