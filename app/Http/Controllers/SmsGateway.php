@@ -29,10 +29,7 @@ class SmsGateway extends Controller
         $contentJson = '"' . addslashes(json_encode($content)) . '"';
         print_r($contentJson);
         die();
-        $execPy = "python ../sms-py/sms.py $contentJson";
-
-        exec($execPy, $dump);
-        var_dump($dump);
-        die();
+        $execPy = "python ../sms-py/send.py $contentJson";
+        exec($execPy);
     }
 }
