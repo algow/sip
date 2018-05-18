@@ -48,17 +48,22 @@ class SupplierController extends Controller
             'nilai_spm' => 'required|numeric',
             'tanggal_terima' => 'required|date'
         ]);
-        $spm = Spm::create($request->all());
 
-        $sms = new Sms($spm);
-        $sms->send();
+        $spm = Spm::create($request->all());
+        $loadSatker = $spm->load('satker');
+        $kontak = $loadSatker->satker->whatsapp;
+
+        if(!empty($kontak))
+        {
+            $sms = new Sms($loadSatker);
+            $sms->send();
+        }
 
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil menyimpan SPM nomor $spm->kode"
         ]);
         return redirect()->route('spm.create');
-
     }
 
     /**
