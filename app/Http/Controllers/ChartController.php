@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 // Pake package enih github.com/ConsoleTVs/Charts
+// Dipanggil dari HomeController
 
 use Illuminate\Http\Request;
 use Charts;
@@ -13,12 +14,19 @@ use App\Spm;
 
 class ChartController extends Controller
 {
+    protected $query;
     protected $dates = array();
     protected $diambil = array();
     protected $diterima = array();
+    
+    public function __construct()
+    {
+        $this->query = Spm::all();
+    }
 
     public function index()
     {
+        
         $this->dateRange();
         $this->diambil();
         $this->diterima();
@@ -70,7 +78,7 @@ class ChartController extends Controller
         $i = 0;
 
         foreach($this->dates as $date){
-            $spm[$i] = Spm::where('tanda_terima', 1)
+            $spm[$i] = $this->query->where('tanda_terima', 1)
                             ->where('diambil_pada', $date)
                             ->count();
 
@@ -84,7 +92,8 @@ class ChartController extends Controller
         $i = 0;
 
         foreach($this->dates as $date){
-            $spm[$i] = Spm::where('tanggal_terima', $date)->count();
+            $spm[$i] = $this->query->where('tanggal_terima', $date)
+                            ->count();
 
             $this->diterima[$i] = $spm[$i];
             $i++;
