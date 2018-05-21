@@ -9,9 +9,9 @@ use App\Petugas;
 class QueryController extends Controller
 {
     protected $satker;
-    protected $tanggal;    // Tanggal database
+    protected $tanggal;
     protected $jenis;
-    protected $direkam;     // Tanggal input
+    protected $direkam;
     protected $query;
 
     public function __construct($request)
@@ -23,7 +23,6 @@ class QueryController extends Controller
         $this->setQuery();
     }
 
-    // Mutator untuk property query
     protected function setQuery()
     {
         $filter = [

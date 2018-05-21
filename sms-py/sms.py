@@ -18,5 +18,5 @@ class constructContent:
         return '+' + self.__kontak
 
     def message(self):
-        pesan = """Dengan ini kami informasikan bahwa {0} saudara dengan nomor {1} yang disampaikan ke KPPN Jakarta III pada {2} ditolak. Mohon untuk segera memperbaiki dan menyampaikan kembali dokumen ke loket 9 atau 10 KPPN.""".format(self.__jenis, self.__nomor, self.__getTanggal())
+        pesan = """Dengan ini kami informasikan bahwa {0} saudara dengan nomor {1} yang disampaikan ke KPPN Jakarta III pada {2} ditolak.""".format(self.__jenis, self.__nomor, self.__getTanggal())
         return pesan
