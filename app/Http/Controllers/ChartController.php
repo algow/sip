@@ -18,7 +18,7 @@ class ChartController extends Controller
     protected $dates = array();
     protected $diambil = array();
     protected $diterima = array();
-    
+
     public function __construct()
     {
         $this->query = Spm::all();
@@ -26,7 +26,7 @@ class ChartController extends Controller
 
     public function index()
     {
-        
+
         $this->dateRange();
         $this->diambil();
         $this->diterima();

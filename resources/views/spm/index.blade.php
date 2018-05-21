@@ -44,7 +44,7 @@
                         </h5>
                         <h5><strong>Diinput Pada</strong> :
                             @isset($diinput)
-                                {{ $tanggal_terima }}
+                                {{ $diinput }}
                             @endisset
                         </h5>
                     </div>

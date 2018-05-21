@@ -19,7 +19,7 @@ class QueryController extends Controller
         $this->satker = $request->input('satker');
         $this->tanggal = $request->input('tanggal');
         $this->jenis = $request->input('jenis');
-        $this->input = $request->input('direkam');
+        $this->direkam = $request->input('direkam');
         $this->setQuery();
     }
 
