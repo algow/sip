@@ -9,8 +9,8 @@ use App\Petugas;
 class QueryController extends Controller
 {
     protected $satker;
-    protected $tanggal;         // Tanggal database
-    protected $tanggalTerima;   // Tanggal terformat untuk dioper ke view
+    protected $tanggal;
+    protected $tanggalTerima;
     protected $jenis;
     protected $query;
 
@@ -23,7 +23,6 @@ class QueryController extends Controller
         $this->query();
     }
     
-    // Mutator untuk property query
     protected function query()
     {
         $filter = [
