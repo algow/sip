@@ -8,19 +8,21 @@ use App\Petugas;
 
 class QueryController extends Controller
 {
-    protected $query_satker;
-    protected $query_tanggal;
-    protected $tanggal_terima;
+    protected $satker;
+    protected $tanggal;
+    protected $tanggalTerima;
     protected $jenis;
     protected $query;
 
-    public function __construct($request) {
-        $this->query_satker = $request->input('satker');
-        $this->query_tanggal = $request->input('tanggal');
+    public function __construct($request)
+    {
+        $this->satker = $request->input('satker');
+        $this->tanggal = $request->input('tanggal');
         $this->jenis = $request->input('jenis');
-        $this->tanggal_terima = date('d F Y', strtotime($this->query_tanggal));
+        $this->tanggalTerima = date('d F Y', strtotime($this->tanggal));
+        $this->query();
 
-        if(empty($this->jenis))
+/*        if(empty($this->jenis))
         {
             if (isset($this->query_satker) && empty($this->query_tanggal)) {
                 $this->query = Spm::with('petugas')->where('kode_satker', $this->query_satker)->get();
@@ -55,21 +57,47 @@ class QueryController extends Controller
                 $this->query = Spm::with('petugas')->where('jenis', $this->jenis)->get();
             }
         }
+*/    }
+
+    protected function query()
+    {
+        $filter = [
+            'jenis' => $this->jenis,
+            'kode_satker' => $this->satker,
+            'tanggal_terima' => $this->tanggal
+        ];
+
+        if(empty($filter['jenis']) && empty($filter['kode_satker']) && empty($filter['tanggal_terima'])) {
+            $this->query = Spm::with('petugas')->get();
+        }
+        else {
+          foreach ($filter as $key => $value) {
+              if(!empty($value)) {
+                  $condArray[$key] = $value;
+              }
+          }
+          $this->query = Spm::with('petugas')->where($condArray)->get();
+        }
     }
 
-    public function getSatker(){
-        return $this->query_satker;
+    public function getSatker()
+    {
+        return $this->satker;
     }
-    public function dbTanggal(){
-        return $this->query_tanggal;
+    public function dbTanggal()
+    {
+        return $this->tanggal;
     }
-    public function getTanggal(){
-        return $this->tanggal_terima;
+    public function getTanggal()
+    {
+        return $this->tanggalTerima;
     }
-    public function getJenis(){
+    public function getJenis()
+    {
         return $this->jenis;
     }
-    public function getQuery(){
+    public function getQuery()
+    {
         return $this->query;
     }
 }
