@@ -7,6 +7,7 @@ use App\Spm;
 use Validator;
 use Session;
 use App\Http\Controllers\PrefixController as Prefix;
+use App\Http\Controllers\SmsGateway as Sms;
 
 class KontrakController extends Controller
 {
@@ -48,6 +49,10 @@ class KontrakController extends Controller
             'tanggal_terima' => 'required|date'
         ]);
         $kontrak = Spm::create($request->all());
+
+        $sms = new Sms($kontrak);
+        $sms->send();
+
         Session::flash("flash_notification", [
             "level"=>"success",
             "message"=>"Berhasil menyimpan SPM nomor $kontrak->kode"
@@ -75,7 +80,7 @@ class KontrakController extends Controller
     public function edit($id)
     {
         $find = Spm::find($id);
-        $form_filler = array('kontrak', 'Nomor Kontrak', 'Nilai Kontrak');
+        $form_filler = array('kontrak', 'Nomor Kontrak', 'Nilai Kontrak', 'Edit');
         return view('spm.edit')->with(compact('find'))->with('id', $id)->with('spm', $form_filler);
     }
 
@@ -93,7 +98,7 @@ class KontrakController extends Controller
             'kode' => 'required',
             'nama_supplier' => 'required',
             'nilai_spm' => 'required|numeric',
-            'keterangan' => 'required'       
+            'keterangan' => 'required'
           ]);
         $kontrak = Spm::find($id);
         $kontrak->update($request->all());

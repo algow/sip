@@ -86,7 +86,7 @@ class SupplierController extends Controller
     public function edit($id)
     {
         $find = Spm::find($id);
-        $form_filler = array('spm', 'Kode SPM', 'Nilai SPM', 'Tanggal SPM');
+        $form_filler = array('spm', 'Kode SPM', 'Nilai SPM', 'Tanggal SPM', 'Edit');
         return view('spm.edit')->with(compact('find'))->with('id', $id)->with('spm', $form_filler);
     }
 

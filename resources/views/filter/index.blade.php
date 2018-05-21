@@ -8,7 +8,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                       <div class="x_title">
-                        <h2>Filter Dokumen <small>pilih sesuai tanggal validasi atau kode satker</small></h2>
+                        <h2>Filter Dokumen <small>pilih sesuai kebutuhan, tidak harus diisi semua</small></h2>
                         <div class="clearfix"></div>
 		      </div>
                       <div class="x_content">

@@ -26,7 +26,7 @@
                     <div class="col-md-6" style="float:right; padding-right:1px">
                         @role('admin')
                             @isset($jenis)
-                                <a class="btn btn-info" style="float:right" href="{{ route($jenis . '.create') }}">Rekam {{ $jenis }}</a>                            
+                                <a class="btn btn-info" style="float:right" href="{{ route($jenis . '.create') }}">Rekam {{ $jenis }}</a>
                                 {{ Form::open(['url' => route('spm.export'), 'method' => 'get', 'style'=>'float:right']) }}
                                     {{ Form::hidden('jenis', $jenis) }}
                                     {{ Form::hidden('satker', $satker) }}
@@ -39,6 +39,11 @@
                     <div class="col-md-6" style="float:left; padding-left:1px">
                         <h5><strong>Tanggal Diterima FO</strong> :
                             @isset($tanggal)
+                                {{ $tanggal_terima }}
+                            @endisset
+                        </h5>
+                        <h5><strong>Diinput Pada</strong> :
+                            @isset($diinput)
                                 {{ $tanggal_terima }}
                             @endisset
                         </h5>

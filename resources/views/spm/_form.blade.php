@@ -12,6 +12,14 @@
     </div>
 </div>
 
+@if (in_array('Edit', $spm))
+<div class="form-group">
+  <div class="col-md-2">
+    {!! Form::text('created_at', null, ['class'=>'form-control', 'readonly' => 'true']) !!}
+  </div>
+</div>
+@endif
+
 <div class="form-group">
   <div class="col-md-6">
     {!! Form::label('kode_satker', 'Kode Satker', ['class'=>'control-label']) !!}
@@ -28,7 +36,7 @@
 
 @isset($spm[3])
 <div class="form-group">
-  <div class="col-md-6">
+  <div class="col-md-3">
     {!! Form::label('tanggal_spm', 'Tanggal SPM', ['class'=>'control-label']) !!}
     {!! Form::date('tanggal_spm', null, ['class'=>'form-control']) !!}
   </div>
@@ -36,7 +44,7 @@
 @endisset
 
 <div class="form-group">
-  <div class="col-md-6">
+  <div class="col-md-3">
     {!! Form::label('tanggal_terima', 'Tanggal Diterima FO', ['class'=>'control-label']) !!}
     {!! Form::date('tanggal_terima', null, ['class'=>'form-control']) !!}
   </div>

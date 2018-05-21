@@ -9,9 +9,9 @@ use App\Petugas;
 class QueryController extends Controller
 {
     protected $satker;
-    protected $tanggal;
-    protected $tanggalTerima;
+    protected $tanggal;    // Tanggal database
     protected $jenis;
+    protected $direkam;     // Tanggal input
     protected $query;
 
     public function __construct($request)
@@ -19,64 +19,30 @@ class QueryController extends Controller
         $this->satker = $request->input('satker');
         $this->tanggal = $request->input('tanggal');
         $this->jenis = $request->input('jenis');
-        $this->tanggalTerima = date('d F Y', strtotime($this->tanggal));
-        $this->query();
+        $this->input = $request->input('direkam');
+        $this->setQuery();
+    }
 
-/*        if(empty($this->jenis))
-        {
-            if (isset($this->query_satker) && empty($this->query_tanggal)) {
-                $this->query = Spm::with('petugas')->where('kode_satker', $this->query_satker)->get();
-            }
-            elseif (isset($this->query_tanggal) && empty($this->query_satker)) {
-                $this->query = Spm::with('petugas')->where('tanggal_terima', $this->query_tanggal)->get();
-            }
-            elseif (isset($this->query_satker) && isset($this->query_tanggal)) {
-                $this->query = Spm::with('petugas')->where('kode_satker', $this->query_satker)
-                        ->where('tanggal_terima', $this->query_tanggal)->get();
-            }
-            else {
-                $this->query = Spm::with('petugas')->get();
-            }
-        }
-        else
-        {
-            if (isset($this->query_satker) && empty($this->query_tanggal)) {
-                $this->query = Spm::with('petugas')->where('kode_satker', $this->query_satker)
-                        ->where('jenis', $this->jenis)->get();
-            }
-            elseif (isset($this->query_tanggal) && empty($this->query_satker)) {
-                $this->query = Spm::with('petugas')->where('tanggal_terima', $this->query_tanggal)
-                        ->where('jenis', $this->jenis)->get();
-            }
-            elseif (isset($this->query_satker) && isset($this->query_tanggal)) {
-                $this->query = Spm::with('petugas')->where('kode_satker', $this->query_satker)
-                        ->where('tanggal_terima', $this->query_tanggal)
-                        ->where('jenis', $this->jenis)->get();
-            }
-            else {
-                $this->query = Spm::with('petugas')->where('jenis', $this->jenis)->get();
-            }
-        }
-*/    }
-
-    protected function query()
+    // Mutator untuk property query
+    protected function setQuery()
     {
         $filter = [
             'jenis' => $this->jenis,
             'kode_satker' => $this->satker,
-            'tanggal_terima' => $this->tanggal
+            'tanggal_terima' => $this->tanggal,
+            'created_at' => $this->direkam
         ];
 
-        if(empty($filter['jenis']) && empty($filter['kode_satker']) && empty($filter['tanggal_terima'])) {
+        if(empty($filter['jenis']) && empty($filter['kode_satker']) && empty($filter['tanggal_terima']) && empty($filter['jenis'])) {
             $this->query = Spm::with('petugas')->get();
         }
         else {
-          foreach ($filter as $key => $value) {
-              if(!empty($value)) {
-                  $condArray[$key] = $value;
-              }
-          }
-          $this->query = Spm::with('petugas')->where($condArray)->get();
+            foreach ($filter as $key => $value) {
+                if(!empty($value)) {
+                    $condArray[$key] = $value;
+                }
+            }
+            $this->query = Spm::with('petugas')->where($condArray)->get();
         }
     }
 
@@ -90,11 +56,17 @@ class QueryController extends Controller
     }
     public function getTanggal()
     {
-        return $this->tanggalTerima;
+        $tanggalTerima = date('d F Y', strtotime($this->tanggal));
+        return $tanggalTerima;
     }
     public function getJenis()
     {
         return $this->jenis;
+    }
+    public function getRekam()
+    {
+        $tanggalRekam = date('d F Y', strtotime($this->direkam));
+        return $tanggalRekam;
     }
     public function getQuery()
     {
