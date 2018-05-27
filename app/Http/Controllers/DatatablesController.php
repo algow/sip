@@ -113,6 +113,7 @@ class DatatablesController extends Controller
                     ->with('satker', $this->query->getSatker())
                     ->with('tanggal', $this->query->dbTanggal())
                     ->with('tanggal_terima', $this->query->getTanggal())
+                    ->with('input', $this->query->dbRekam())
                     ->with('diinput', $this->query->getRekam());
     }
 }

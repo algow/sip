@@ -22,7 +22,7 @@ class PengambilSpmController extends Controller
         ]);
         return response()->json($message);
     }
-    public function getInput($request)
+    protected function getInput($request)
     {
         $scan = $request->input('pengambil');
         $pengambil = base_convert($scan, 36, 10);
@@ -33,14 +33,14 @@ class PengambilSpmController extends Controller
         }
         return $pengambil;
     }
-    public function getSpm($request)
+    protected function getSpm($request)
     {
         $id = $request->input('id');
         $spm = Spm::find($id);
 
         return $spm;
     }
-    public function validasi($request, $pengambil)
+    protected function validasi($request, $pengambil)
     {
         $spm = $this->getSpm($request);
 

@@ -19,7 +19,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     @isset($jenis)
-                        <h2 class="panel-title">{{ ucwords($jenis) }}</h2>
+                        <h2 class="panel-title" style="font-weight:bold">{{ strtoupper($jenis) }}</h2>
                     @endisset
                 </div>
                 <div class="panel-body">
@@ -43,7 +43,7 @@
                             @endisset
                         </h5>
                         <h5><strong>Diinput Pada</strong> :
-                            @isset($diinput)
+                            @isset($input)
                                 {{ $diinput }}
                             @endisset
                         </h5>
