@@ -11,7 +11,7 @@ class ExcelController extends Controller
     public function query($request)
     {
         $query = new QueryController($request);
-        
+
         return $query;
     }
 
@@ -20,7 +20,7 @@ class ExcelController extends Controller
         $query = $this->query($request)->getQuery();
         $tanggal_terima = $this->query($request)->getTanggal();
         $jenis = $this->query($request)->getJenis();
-        
+
         $spm = array($query, $tanggal_terima, $jenis);
 
         Excel::load('misc/' . $jenis . '.xlsx', function($excel) use ($spm) {
@@ -28,7 +28,7 @@ class ExcelController extends Controller
                 $sheet->setCellValue('C2', $spm[1]);
                 $i = 1;
                 $rows = 3;
-                
+
                 if($spm[2] == 'spm')
                 {
                     foreach ($spm[0] as $spm) {
@@ -39,9 +39,10 @@ class ExcelController extends Controller
                             $spm->kode,
                             date('d/m/Y', strtotime($spm->tanggal_spm)),
                             number_format($spm->nilai_spm, 0, '.', '.'),
-                            strtoupper($spm->keterangan)
+                            strtoupper($spm->keterangan),
+                            $spm->diambil_pada
                         ]);
-                    } 
+                    }
                 }
                 else
                 {
@@ -52,7 +53,8 @@ class ExcelController extends Controller
                             strtoupper($spm->nama_supplier),
                             $spm->kode,
                             number_format($spm->nilai_spm, 0, '.', '.'),
-                            strtoupper($spm->keterangan)
+                            strtoupper($spm->keterangan),
+                            $spm->diambil_pada
                         ]);
                     }
                 }

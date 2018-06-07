@@ -44,17 +44,17 @@ class QueryController extends Controller
                 $cond[$key] = $value;
                 if(is_array($value)) {
                     array_pop($cond);
-                    $condBetween[$key] = $value;
+                    $condBetween = $value;
                 }
             }
         }
 
         if(!is_null($cond) && !is_null($condBetween)) {
-            $this->query = Spm::with('petugas')->where($cond)->whereBetween('created_at', $condBetween['created_at'])->get();
+            $this->query = Spm::with('petugas')->where($cond)->whereBetween('created_at', $condBetween)->get();
         } elseif (!is_null($cond) && is_null($condBetween)) {
             $this->query = Spm::with('petugas')->where($cond)->get();
         } elseif (is_null($cond) && !is_null($condBetween)) {
-            $this->query = Spm::with('petugas')->whereBetween('created_at', $condBetween['created_at'])->get();
+            $this->query = Spm::with('petugas')->whereBetween('created_at', $condBetween)->get();
         } else {
             $this->query = Spm::with('petugas')->get();
         }
