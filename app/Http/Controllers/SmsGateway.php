@@ -5,13 +5,13 @@ use App\Satker;
 
 use Illuminate\Http\Request;
 
-class SmsGateway extends Controller
+class SmsGateway
 {
-    protected $kontak;
-    protected $jenis;
-    protected $nomor;
-    protected $tanggal;
-    protected $keterangan;
+    private $kontak;
+    private $jenis;
+    private $nomor;
+    private $tanggal;
+    private $keterangan;
 
     public function __construct($content)
     {
@@ -24,10 +24,8 @@ class SmsGateway extends Controller
 
     public function send()
     {
-        $content = array($this->kontak, $this->jenis, $this->nomor, $this->tanggal, $this->keterangan);
+        $content = [$this->kontak, $this->jenis, $this->nomor, $this->tanggal, $this->keterangan];
         $contentJson = '"' . addslashes(json_encode($content)) . '"';
-        print_r($contentJson);
-        die();
 
         $execPy = "python ../sms-py/send.py $contentJson";
         exec($execPy);

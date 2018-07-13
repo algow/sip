@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Laratrust\LaratrustFacade as Laratrust;
-use App\Http\Controllers\ChartController as ChartController;
+use App\Http\Controllers\Harian as Harian;
 
 
 class HomeController extends Controller
@@ -30,7 +30,7 @@ class HomeController extends Controller
             return redirect('fo/filter');
         }
         elseif(Laratrust::hasRole('admin')) {
-            $chart = new ChartController;
+            $chart = new Harian;
             return $chart->index();
         }
         else {

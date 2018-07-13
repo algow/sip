@@ -2,27 +2,18 @@
 
 namespace App\Http\Controllers;
 
-// Pake package enih github.com/ConsoleTVs/Charts
-// Dipanggil dari HomeController
-
-use Illuminate\Http\Request;
 use Charts;
 use DateTime;
 use DateInterval;
 use DatePeriod;
-use App\Spm;
 
-class ChartController extends Controller
-{
-    protected $query;
-    protected $dates = array();
-    protected $diambil = array();
-    protected $diterima = array();
+// Dipanggil dari HomeController
 
-    public function __construct()
-    {
-        $this->query = Spm::all();
-    }
+Class Harian Extends Chart {
+
+		private $dates = [];
+    private $diambil = [];
+    private $diterima = [];
 
     public function index()
     {
@@ -50,7 +41,7 @@ class ChartController extends Controller
         return view('home', ['chart' => $chart]);
     }
 
-    public function dateRange()
+    private function dateRange()
     {
         $now = date("Y-m-d");
       	$dstring = strtotime("6 weeks ago");
@@ -73,7 +64,7 @@ class ChartController extends Controller
         }
     }
 
-    public function diambil()
+    private function diambil()
     {
         $i = 0;
 
@@ -87,7 +78,7 @@ class ChartController extends Controller
         }
     }
 
-    public function diterima()
+    private function diterima()
     {
         $i = 0;
 

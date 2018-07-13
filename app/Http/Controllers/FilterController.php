@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
-use App\Http\Controllers\DatatablesController as IndexTable;
-use App\Http\Controllers\PrefixController as Prefix;
+use App\Http\Controllers\DatatablesIndex;
+use App\Http\Controllers\Prefix as Prefix;
 use Yajra\DataTables\Html\Builder;
 
 class FilterController extends Controller
@@ -18,7 +18,7 @@ class FilterController extends Controller
     public function index(Request $request, Builder $htmlBuilder, Prefix $prefix)
     {
         
-        $datatables = new IndexTable($request);
+        $datatables = new DatatablesIndex($request);
 
         return $datatables->spm($request, $htmlBuilder, $prefix);
     }    

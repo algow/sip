@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use App\Spm;
 use App\Petugas;
 
-class QueryController extends Controller
+class QueryRead
 {
-    protected $satker;
-    protected $tanggal;
-    protected $jenis;
-    protected $direkam;
-    protected $query;
+    private $satker;
+    private $tanggal;
+    private $jenis;
+    private $direkam;
+    private $query;
 
     public function __construct($request)
     {
@@ -23,7 +23,7 @@ class QueryController extends Controller
         $this->setQuery();
     }
 
-    protected function setQuery()
+    private function setQuery()
     {
         $range = $cond = $condBetween = null;
         if(!empty($this->direkam)) {

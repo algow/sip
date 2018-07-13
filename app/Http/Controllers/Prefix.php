@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PrefixController extends Controller
+class Prefix
 {
-    protected $prefix;
+    private $prefix;
     
     public function __construct(Request $request)
     {

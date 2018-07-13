@@ -1,13 +1,21 @@
 <!-- ==========================================
-                                                SISTEM KONFIRMASI & PENOLAKAN ============================================ -->
+                                                     SISTEM INFORMASI & 
+                                                    KONFIRMASI PENOLAKAN     ============================================ -->
 <!-- ==========================================
-                                                      KPPN JAKARTA III     ============================================ -->
+                                                      KPPN JAKARTA III       ============================================ -->
 <!-- ==========================================
-                                                        Thanks to:         ============================================ -->
+                                                          Coder:             ============================================ -->
 <!-- ==========================================
-                                                       Nanda Fahrain       ============================================ -->
+                                                       Algo Wijaya           ============================================ -->
 <!-- ==========================================
-                                                       Muhammad Fadly      ============================================ -->
+                                                        Thanks to:           ============================================ -->
+<!-- ==========================================
+                                                       Nanda Fahrain         ============================================ -->
+<!-- ==========================================
+                                                       Muhammad Fadly        ============================================ -->
+<!-- ==========================================
+                                                      Chelin Sianturi        ============================================ -->
+
 
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
@@ -30,6 +38,7 @@
     <link href="{{ asset('css/custom.min.css') }}" rel="stylesheet" property='stylesheet'>
     <link href="{{ asset('css/nprogress.css') }}" rel="stylesheet" property='stylesheet'>
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" property='stylesheet'>
+    @yield('styles')
 
 </head>
 <body class="nav-md">
@@ -38,7 +47,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="#" class="site_title"><i class="fa fa-location-arrow"></i> <span>Sinkron SPM</span></a>
+                        <a href="#" class="site_title"><i class="fa fa-location-arrow"></i> <span>Sinkron</span></a>
                     </div>
                     <div class="clearfix"></div>
                     <br />

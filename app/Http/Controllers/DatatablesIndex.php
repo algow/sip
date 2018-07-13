@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\QueryController as QueryController;
+use App\Http\Controllers\QueryRead;
 use Yajra\DataTables\DataTables;
 use App\Petugas;
 
-class DatatablesController extends Controller
+class DatatablesIndex
 {
 
-    protected $query;
+    private $query;
 
     public function __construct($request)
     {
-        $this->query = new QueryController($request);
+        $this->query = new QueryRead($request);
     }
 
     public function prefix($prefix)

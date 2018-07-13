@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 use App\Spm;
 use Validator;
-use App\Http\Controllers\PrefixController as Prefix;
+use App\Http\Controllers\Prefix;
 use App\Http\Controllers\SmsGateway as Sms;
 
 class SupplierController extends Controller
@@ -40,6 +40,8 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+        // $cekDuplikat = ['kode_satker', 'kode', 'tanggal_spm', 'nama_supplier', 'nilai_spm', 'keterangan', 'jenis'];
+
         $this->validate($request, [
             'kode_satker' => 'required|size:6|exists:satkers,kode',
             'kode' => 'required|size:5',

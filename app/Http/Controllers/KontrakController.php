@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Spm;
 use Validator;
 use Session;
-use App\Http\Controllers\PrefixController as Prefix;
+use App\Http\Controllers\Prefix;
 use App\Http\Controllers\SmsGateway as Sms;
 
 class KontrakController extends Controller

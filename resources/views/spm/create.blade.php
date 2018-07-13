@@ -12,6 +12,11 @@
                     {!! Form::open(['url' => route($spm[0] . '.store'), 'method' => 'post', 'class'=>'form-horizontal']) !!}
                         @include('spm._form')
                     {!! Form::close() !!}
+
+                    {!! Form::open(['url' => route('spm.import'), 'method' => 'post', 'class'=>'form-horizontal', 'files' => true]) !!}
+                        {!! Form::file('import') !!}
+                        {!! Form::submit('Simpan', ['class'=>'btn btn-primary']) !!}
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

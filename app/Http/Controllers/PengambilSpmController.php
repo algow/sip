@@ -22,7 +22,7 @@ class PengambilSpmController extends Controller
         ]);
         return response()->json($message);
     }
-    protected function getInput($request)
+    private function getInput($request)
     {
         $scan = $request->input('pengambil');
         $pengambil = base_convert($scan, 36, 10);
@@ -33,19 +33,19 @@ class PengambilSpmController extends Controller
         }
         return $pengambil;
     }
-    protected function getSpm($request)
+    private function getSpm($request)
     {
         $id = $request->input('id');
         $spm = Spm::find($id);
 
         return $spm;
     }
-    protected function validasi($request, $pengambil)
+    private function validasi($request, $pengambil)
     {
         $spm = $this->getSpm($request);
 
         $queryPetugas = Petugas::where('barcode', $pengambil);
-        $petugas = $queryPetugas->first();                                               // Does it exist inside the database?
+        $petugas = $queryPetugas->first();      // Does it exist inside the database?
         $validasi1 = $queryPetugas->where('kode_satker', $spm->kode_satker)->first();   // Nyocokno petugas mbek satkere
 
         if (is_null($petugas)) {
