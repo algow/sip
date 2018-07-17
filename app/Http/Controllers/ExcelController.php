@@ -1,5 +1,8 @@
 <?php
 
+// Laravel Excel 2.1 https://github.com/Maatwebsite/Laravel-Excel/tree/2.1
+// Dokumentasi https://laravel-excel.maatwebsite.nl/docs/2.1/import/basics
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,8 +12,9 @@ use Illuminate\Support\Facades\DB;
 
 class ExcelController extends Controller
 {
-    private $bulkQuery = [];
+    private $orderedArray = [];
     private $loop = true;
+    private $i = 0;
 
     private function query($request)
     {
@@ -70,36 +74,72 @@ class ExcelController extends Controller
     {
         $file = $request->file('import');
 
-        $excel = Excel::selectSheetsByIndex(0)->load($file, function($reader) {
-        })->get()->toArray();
+        $excel = Excel::selectSheetsByIndex(0)->load($file, function($reader) {   // Ubah excel jadi array
+        })->takeRows(60)->toArray();
 
-        $this->bulkInsert($excel);
+        $tes = $this->bulkInsert($excel);
+        print_r($tes);
+        die();
     }
-    private function bulkInsert($data)
+
+    private function bulkInsert($unOrderedArray)
     {
-        foreach($data as $key => $value)
+        foreach($unOrderedArray as $key => $value)
         {
             if($this->loop) {
                 if(is_array($value)) {
-                    array_push($this->bulkQuery, $value);
-                    // Rrrreecursion AWAS BUG
+                    // array_push($this->bulkQuery, $value);
+                    // Rrrrreecursion kalau ada bug asalnya paling dari sini
                     $this->bulkInsert($value);
-                } elseif($key === 'nomor_invoice' && $this->sudahTerinput($value)) {
-                    array_pop($this->bulkQuery);
-                    $this->loop = false;
+                    $this->i++;
+                } else {
+                    $this->assembleTheArray($key, $value);
                 }
             } else {
-                return $this->bulkQuery;
+                return $this->orderedArray;
             }
+        }
+        return null;
+    }
+
+    private function assembleTheArray($key, $value)
+    {
+        switch($key) {
+            case 'no':
+                break;
+            case 'approver':
+                break;
+            case 'response':
+                break;
+            case 'tanggal_penolakan':
+                $this->orderedArray[$this->i]['tanggal_terima'] = $value;
+                break;
+            case 'nomor_invoice':
+                if($this->sudahTerinput($value)) {
+                    array_pop($this->orderedArray);
+                    $this->loop = false;
+                    break;
+                }
+                $this->orderedArray[$this->i]['kode'] = substr($value, 0, 5);
+                $this->orderedArray[$this->i]['kode_satker'] = substr($value, 7, 6);
+                break;
+            case 'tanggal_invoice':
+                $this->orderedArray[$this->i]['tanggal_spm'] = $value; break;
+            case 'nilai_invoice':
+                $this->orderedArray[$this->i]['nilai_spm'] = $value; break;
+            case 'alasan_penolakan':
+                $this->orderedArray[$this->i]['keterangan'] = $value; break;
         }
     }
 
-    private function sudahTerinput($nomSpm)
+    private function sudahTerinput(String $noInvoice)
     {
-        // array[0] masuk id database kecil
-        // Ambil nomor spm dari query terakhir
+        // Array index terkecil masuk duluan ke database (LIFO)
+        // Ambil nomor spm dari query impor terakhir
         // Bar ngono cocokno neng $noSpm, hasile return bool
-        $lastImport = DB::table('spms')->where('import', 1)->latest()->first();
-        return $nomSpm === $lastImport;
+        $lastImport = DB::table('spms')->where('import', 1)->latest()->first()->kode; // String nomor spm
+        $noSpm = substr($noInvoice, 0, 5);
+
+        return $noSpm === $lastImport;
     }
 }
