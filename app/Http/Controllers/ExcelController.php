@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 class ExcelController extends Controller
 {
     private $orderedArray = [];
+    private $imporTerakhir;
     private $loop = true;
     private $i = 0;
 
@@ -74,25 +75,29 @@ class ExcelController extends Controller
     {
         $file = $request->file('import');
 
-        $excel = Excel::selectSheetsByIndex(0)->load($file, function($reader) {   // Ubah excel jadi array
-        })->takeRows(60)->toArray();
+        // Ubah excel jadi array limit 30 rows
+        $excel = Excel::selectSheetsByIndex(0)->load($file, function($reader) {
+        })->takeRows(30)->toArray();
 
-        $tes = $this->bulkInsert($excel);
-        print_r($tes);
-        die();
+        // Ambil nomor spm dari db yang diimpor terakhir
+        $this->imporTerakhir = DB::table('spms')->find(DB::table('spms')->where('import', 1)->max('id'))->kode;
+
+        $dataImprot = $this->bulkInsert($excel);
+
+        // Ojo lali nulis EXCEPTION nyang kene
+        $tes = DB::table('spms')->insert($dataImprot);
     }
-
     private function bulkInsert($unOrderedArray)
     {
         foreach($unOrderedArray as $key => $value)
         {
             if($this->loop) {
                 if(is_array($value)) {
-                    // array_push($this->bulkQuery, $value);
-                    // Rrrrreecursion kalau ada bug asalnya paling dari sini
+                    // Rrrrreeecursion
                     $this->bulkInsert($value);
                     $this->i++;
                 } else {
+                    // Susun unordered array dari excel menjadi format db (hasilnya: $this->orderedArray)
                     $this->assembleTheArray($key, $value);
                 }
             } else {
@@ -101,20 +106,20 @@ class ExcelController extends Controller
         }
         return null;
     }
-
     private function assembleTheArray($key, $value)
     {
         switch($key) {
-            case 'no':
-                break;
-            case 'approver':
-                break;
+            case 'no': break;
+            case 'approver': break;
             case 'response':
+                $this->orderedArray[$this->i]['jenis'] = 'spm';
+                $this->orderedArray[$this->i]['import'] = 1;
                 break;
             case 'tanggal_penolakan':
-                $this->orderedArray[$this->i]['tanggal_terima'] = $value;
+                $this->orderedArray[$this->i]['tanggal_terima'] = date('Y-m-d', strtotime($value));
                 break;
             case 'nomor_invoice':
+                // Cek kalau row excel bersangkutan udah pernah di import
                 if($this->sudahTerinput($value)) {
                     array_pop($this->orderedArray);
                     $this->loop = false;
@@ -124,22 +129,21 @@ class ExcelController extends Controller
                 $this->orderedArray[$this->i]['kode_satker'] = substr($value, 7, 6);
                 break;
             case 'tanggal_invoice':
-                $this->orderedArray[$this->i]['tanggal_spm'] = $value; break;
+                $this->orderedArray[$this->i]['tanggal_spm'] = date('Y-m-d', strtotime($value)); break;
             case 'nilai_invoice':
                 $this->orderedArray[$this->i]['nilai_spm'] = $value; break;
             case 'alasan_penolakan':
-                $this->orderedArray[$this->i]['keterangan'] = $value; break;
+                $this->orderedArray[$this->i]['keterangan'] = substr($value, 0, 190); break;
         }
     }
-
     private function sudahTerinput(String $noInvoice)
     {
-        // Array index terkecil masuk duluan ke database (LIFO)
-        // Ambil nomor spm dari query impor terakhir
+        // Array index terkecil masuk duluan ke database dengan id kecil (FIFO)
+        // Ambil nomor spm dari db yang diimpor terakhir
         // Bar ngono cocokno neng $noSpm, hasile return bool
-        $lastImport = DB::table('spms')->where('import', 1)->latest()->first()->kode; // String nomor spm
+        $lastImport = $this->imporTerakhir; // String nomor spm
         $noSpm = substr($noInvoice, 0, 5);
 
-        return $noSpm === $lastImport;
+        return $noSpm === $lastImport;  // Bool
     }
 }
