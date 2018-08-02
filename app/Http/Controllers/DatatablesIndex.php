@@ -36,7 +36,7 @@ class DatatablesIndex
                         ->with('model', $spm)
                         ->with('edit_url', route($spm->jenis . '.edit', $spm->id))
                         ->with('delete', route($spm->jenis . '.destroy', $spm->id))
-                        ->with('kontak', route('spm.whatsapp', $spm->id))
+                        // ->with('kontak', route('spm.whatsapp', $spm->id))
                         ->with('tanggal', $spm->diambil_pada)
                         ->with('prefix', $this->prefix($prefix))
                         ->with('pengambil', $spm->petugas['nama_petugas'])

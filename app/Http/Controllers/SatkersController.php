@@ -26,7 +26,7 @@ class SatkersController extends Controller
                         ->with('model', $satker)
                         ->with('edit_url', route('satker.edit', $satker->kode))
                         ->with('delete', null)
-                        ->with('kontak', route('spm.whatsapp', $satker->kode))
+                        // ->with('kontak', route('spm.whatsapp', $satker->kode))
                         ->with('tanggal', 'I think therefore i am')
                         ->with('prefix', 'admin')
                         ->with('pengambil', 'null')
@@ -34,7 +34,7 @@ class SatkersController extends Controller
             })->make(true);
         }
         $html = $htmlBuilder
-         ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'Kode Satker'])       
+         ->addColumn(['data' => 'kode', 'name'=>'kode', 'title'=>'Kode Satker'])
          ->addColumn(['data' => 'nama_satker', 'name'=>'nama_satker', 'title'=>'Nama Satker'])
          ->addColumn(['data' => 'whatsapp', 'name'=>'whatsapp', 'title'=>'Nomor Kontak'])
          ->addColumn(['data' => 'action', 'name'=>'aksi', 'title'=>'Aksi', 'orderable'=>false, 'searchable'=>false]);
@@ -103,7 +103,7 @@ class SatkersController extends Controller
             'nama_satker' => 'required']);
         $satker = Satker::find($id);
         $satker->update($request->all());
-        return redirect()->route('satker.index');        
+        return redirect()->route('satker.index');
     }
 
     /**

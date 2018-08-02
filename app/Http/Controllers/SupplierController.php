@@ -51,13 +51,21 @@ class SupplierController extends Controller
             'tanggal_terima' => 'required|date'
         ]);
 
+        $cegahSms = $request->input('cegah_sms');
+
         $spm = Spm::create($request->all());
         $loadSatker = $spm->load('satker');
-        $kontak = $loadSatker->satker->whatsapp;
 
-        if(!empty($kontak))
+        $toArray = ['whatsapp' => $loadSatker->satker->whatsapp,
+                    'jenis' => $loadSatker->jenis,
+                    'kode' => $loadSatker->kode,
+                    'tanggal_terima' => $loadSatker->tanggal_terima,
+                    'keterangan' => $loadSatker->keterangan
+                  ];
+
+        if(empty($cegahSms) && !empty($toArray['whatsapp']))
         {
-            $sms = new Sms($loadSatker);
+            $sms = new Sms($toArray);
             $sms->send();
         }
 

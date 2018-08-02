@@ -15,19 +15,20 @@ class SmsGateway
 
     public function __construct($content)
     {
-        $this->kontak = $content->satker->whatsapp;
-        $this->jenis = $content->jenis;
-        $this->nomor = $content->kode;
-        $this->tanggal = $content->tanggal_terima;
-        $this->keterangan = $content->keterangan;
+        $this->kontak = $content['whatsapp'];
+        $this->jenis = $content['jenis'];
+        $this->nomor = $content['kode'];
+        $this->tanggal = $content['tanggal_terima'];
+        $this->keterangan = $content['keterangan'];
     }
 
     public function send()
     {
         $content = [$this->kontak, $this->jenis, $this->nomor, $this->tanggal, $this->keterangan];
         $contentJson = '"' . addslashes(json_encode($content)) . '"';
-
-        $execPy = "python ../sms-py/send.py $contentJson";
+        print_r($contentJson);
+        die();
+        $execPy = "python ../sms-py/send.py $contentJson >/dev/null 2>/dev/null &";
         exec($execPy);
     }
 }

@@ -48,10 +48,22 @@ class KontrakController extends Controller
             'keterangan' => 'required',
             'tanggal_terima' => 'required|date'
         ]);
-        $kontrak = Spm::create($request->all());
 
-        $sms = new Sms($kontrak);
-        $sms->send();
+        $cegahSms = $request->input('cegah_sms');
+        $kontrak = Spm::create($request->all());
+        $loadSatker = $kontrak->load('satker');
+
+        $toArray = ['whatsapp' => $loadSatker->satker->whatsapp,
+                    'jenis' => $loadSatker->jenis,
+                    'kode' => substr($loadSatker->kode, 0, 24),
+                    'tanggal_terima' => $loadSatker->tanggal_terima,
+                    'keterangan' => $loadSatker->keterangan
+                  ];
+
+        if(empty($cegahSms) && !empty($toArray['whatsapp'])) {
+            $sms = new Sms($toArray);
+            $sms->send();
+        }
 
         Session::flash("flash_notification", [
             "level"=>"success",
