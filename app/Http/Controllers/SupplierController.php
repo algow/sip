@@ -18,7 +18,7 @@ class SupplierController extends Controller
      */
     public function index(Prefix $prefix)
     {
-        return redirect()->route($prefix->getPrefix() . '.telusuri',['jenis'=>'spm','satker'=>'','tanggal'=>'']);
+        return redirect()->route($prefix->getPrefix() . '.telusuri',['jenis'=>'spm','satker'=>'','tanggal'=>'','direkam'=>'']);
     }
 
     /**

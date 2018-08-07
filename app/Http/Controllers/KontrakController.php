@@ -18,7 +18,7 @@ class KontrakController extends Controller
      */
     public function index(Prefix $prefix)
     {
-        return redirect()->route($prefix->getPrefix() . '.telusuri',['jenis'=>'kontrak','satker'=>'','tanggal'=>'']);
+        return redirect()->route($prefix->getPrefix() . '.telusuri',['jenis'=>'kontrak','satker'=>'','tanggal'=>'','direkam'=>'']);
     }
 
     /**
