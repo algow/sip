@@ -88,12 +88,20 @@
 </div>
 
 {{ Form::hidden('jenis', $spm[0], ['id'=>'jenis']) }}
-
+<div class="form-group" style="margin:0px 0 2px 10px">
+    <div class="form-check">
+        <input class="form-check-input" name="cegah_sms" type="checkbox" value="ya">
+        <label for="cegah_sms" class="form-check-label bg-warning">Cegah Pengiriman SMS</label>
+    </div>
+</div>
 <div class="form-group">
     <div class="col-md-6">
         <input class="btn btn-primary" value="Simpan" type="submit">
     </div>
 </div>
+
+<!-- Saya ndak paham javascript
+ Sori kalau kodingannya ngaco -->
 
 @section('scripts')
 <script>
