@@ -60,7 +60,7 @@ class SupplierController extends Controller
                     'jenis' => $loadSatker->jenis,
                     'kode' => $loadSatker->kode,
                     'tanggal_terima' => $loadSatker->tanggal_terima,
-                    'keterangan' => $loadSatker->keterangan
+                    'satker' => $loadSatker->kode_satker
                   ];
 
         if(empty($cegahSms) && !empty($toArray['whatsapp']))

@@ -57,7 +57,7 @@ class KontrakController extends Controller
                     'jenis' => $loadSatker->jenis,
                     'kode' => substr($loadSatker->kode, 0, 24),
                     'tanggal_terima' => $loadSatker->tanggal_terima,
-                    'keterangan' => $loadSatker->keterangan
+                    'satker' => $loadSatker->kode_satker
                   ];
 
         if(empty($cegahSms) && !empty($toArray['whatsapp'])) {

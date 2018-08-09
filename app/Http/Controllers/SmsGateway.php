@@ -11,7 +11,7 @@ class SmsGateway
     private $jenis;
     private $nomor;
     private $tanggal;
-    private $keterangan;
+    private $satker;
 
     public function __construct($content)
     {
@@ -19,15 +19,14 @@ class SmsGateway
         $this->jenis = $content['jenis'];
         $this->nomor = $content['kode'];
         $this->tanggal = $content['tanggal_terima'];
-        $this->keterangan = $content['keterangan'];
+        $this->satker = $content['satker'];
     }
 
     public function send()
     {
-        $content = [$this->kontak, $this->jenis, $this->nomor, $this->tanggal, $this->keterangan];
+        $content = [$this->kontak, $this->jenis, $this->nomor, $this->tanggal, $this->satker];
         $contentJson = '"' . addslashes(json_encode($content)) . '"';
-        print_r($contentJson);
-        die();
+
         $execPy = "python ../sms-py/send.py $contentJson >/dev/null 2>/dev/null &";
         exec($execPy);
     }
