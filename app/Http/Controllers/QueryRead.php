@@ -18,25 +18,26 @@ class QueryRead
     {
         $this->satker = $request->input('satker');
         $this->tanggal = $request->input('tanggal');
+        $this->tanggal2 = $request->input('tanggal2');
         $this->jenis = $request->input('jenis');
-        $this->direkam = $request->input('direkam');
         $this->setQuery();
     }
 
     private function setQuery()
     {
-        $range = $cond = $condBetween = null;
-        if(!empty($this->direkam)) {
-            $begin = date("Y-m-d H:i:s", strtotime("$this->direkam 00:00:00"));
-            $end = date("Y-m-d H:i:s", strtotime("$this->direkam 23:59:59"));
-            $range = [$begin, $end];
+        $cond = $condBetween = null;
+        if(!empty($this->tanggal2)) {
+            $begin = date("Y-m-d", strtotime($this->tanggal));
+            $end = date("Y-m-d", strtotime($this->tanggal2));
+            $date = [$begin, $end];
+        } else {
+            $date = $this->tanggal;
         }
 
         $filter = [
             'jenis' => $this->jenis,
             'kode_satker' => $this->satker,
-            'tanggal_terima' => $this->tanggal,
-            'created_at' => $range
+            'tanggal_terima' => $date
         ];
 
         foreach ($filter as $key => $value) {
@@ -50,11 +51,11 @@ class QueryRead
         }
 
         if(!is_null($cond) && !is_null($condBetween)) {
-            $this->query = Spm::with('petugas')->where($cond)->whereBetween('created_at', $condBetween)->get();
+            $this->query = Spm::with('petugas')->where($cond)->whereBetween('tanggal_terima', $condBetween)->get();
         } elseif (!is_null($cond) && is_null($condBetween)) {
             $this->query = Spm::with('petugas')->where($cond)->get();
         } elseif (is_null($cond) && !is_null($condBetween)) {
-            $this->query = Spm::with('petugas')->whereBetween('created_at', $condBetween)->get();
+            $this->query = Spm::with('petugas')->whereBetween('tanggal_terima', $condBetween)->get();
         } else {
             $this->query = Spm::with('petugas')->get();
         }

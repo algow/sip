@@ -25,17 +25,23 @@
 </div>
 
 <div class="form-group">
-  <div class="col-md-3">
-    {!! Form::label('tanggal', 'Tanggal Diterima FO:', ['class'=>'control-label']) !!}
-    {!! Form::date('tanggal', null, ['class'=>'form-control']) !!}
-  </div>
+    <div class="col-md-6">
+      {!! Form::label('tanggal', 'Tanggal Diterima FO:', ['class'=>'control-label']) !!}
+    </div>
 </div>
 
 <div class="form-group">
-  <div class="col-md-3">
-    {!! Form::label('direkam', 'Tanggal Input:', ['class'=>'control-label']) !!}
-    {!! Form::date('direkam', null, ['class'=>'form-control']) !!}
-  </div>
+    <div class="col-md-6">
+      <div class="col-md-5">
+        {!! Form::date('tanggal', null, ['class'=>'form-control']) !!}
+      </div>
+      <div class="col-md-2">
+        <p style="text-align:center; margin:7px">s.d.</p>
+      </div>
+      <div class="col-md-5">
+        {!! Form::date('tanggal2', null, ['class'=>'form-control']) !!}
+      </div>
+    </div>
 </div>
 
 <div class="form-group">
